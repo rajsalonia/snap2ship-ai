@@ -164,7 +164,7 @@ def analyze(payload: AnalyzeRequest):
     if APP_MODEL not in ALLOWED_MODELS:
         raise HTTPException(503, "GEMMA_MODEL must explicitly select gemma-4-26b-a4b-it or gemma-4-31b-it. No model was substituted.")
     if not MODEL_SLOTS.acquire(blocking=False):
-        raise HTTPException(429, "The AI engine is busy processing two requests. Retry shortly; no additional model call was made.")
+        raise HTTPException(429, "The AI engine is busy processing two requests. Retry shortly; no additional model call was made.", headers={"Retry-After": "10"})
     try:
         try:
             from google import genai
