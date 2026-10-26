@@ -4,7 +4,7 @@ import IdeaBoard from './components/IdeaBoard.jsx';
 import BuildPreview from './components/BuildPreview.jsx';
 import CameraCapture from './components/CameraCapture.jsx';
 
-const API = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
+const API = (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '')).replace(/\/$/, '');
 const SAMPLE_CONTEXT = 'Campus Create Day is on 14 November 2026 at the Student Activity Centre. Design Jam at 10:00 AM, Web Workshop at 12:00 PM, Project Showcase at 3:00 PM. Bring a laptop and student ID. Help students find sessions and prepare for the day.';
 
 export default function App() {
