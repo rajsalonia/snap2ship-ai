@@ -1,0 +1,10 @@
+[
+  {
+    "template": "event",
+    "standalone_fragment_navigation": "passed"
+  },
+  {
+    "template": "info",
+    "standalone_fragment_navigation": "passed"
+  }
+]

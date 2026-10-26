@@ -1,0 +1,8 @@
+{
+  "uploaded_archive": "snap2ship-ai-integrations-ready.zip",
+  "sha256": "951ae6cf91baa89d087d73ed97a97935481b0ef11d213978b274e58f19fe886e",
+  "archive_files": 25,
+  "validated_application_commit": "1f531feb34b4bdd4a34809d80086a97ba7baf61b",
+  "branch": "codex/validated-submission-20261026",
+  "newer_remote_ui_commits_preserved_on_main": true
+}

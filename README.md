@@ -17,9 +17,13 @@ Built for Hacktoberfest Hack Day Delhi × SKILLOP DTU, 26 October 2026. MIT lice
 - A separately labelled fictional sample that makes no model request.
 - GitHub Actions for backend tests, frontend compilation, three generated-app builds and the deployment container.
 
-**Live Gemma access is unverified:** no key was supplied and the owner chose to continue without a live provider test. SDK-boundary tests use mocks. Sample proposals are curated, not live AI output. **DigitalOcean deployment is prepared, not yet verified.** See [actual verification](docs/VERIFICATION.md).
+**Live Gemma access is unverified:** the cloud environment has no configured key. SDK-boundary tests use mocks. Sample proposals are curated, not live AI output. **DigitalOcean deployment is prepared, not yet verified.** See [actual verification](docs/VERIFICATION.md).
 
-![Compiled React preview of the fictional sample](docs/screenshots/03-compiled-preview.png)
+![Locally compiled React preview of the curated fictional sample](docs/screenshots/03-current-compiled-preview.png)
+
+Current evidence applies to application source `1f531fe` on `codex/validated-submission-20261026`; newer UI/camera work on `main` is preserved and not covered by those checks. One embedded-preview fragment-navigation defect is documented in [verification](docs/VERIFICATION.md).
+
+[Current integration status](docs/INTEGRATION-STATUS.md) · [Video script](docs/VIDEO-SCRIPT.md)
 
 ## Quick start
 

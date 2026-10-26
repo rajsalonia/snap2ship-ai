@@ -1,0 +1,44 @@
+{
+  "health": {
+    "ok": true,
+    "model": "gemma-4-26b-a4b-it",
+    "key_configured": false,
+    "compiler_available": true,
+    "live_model_verified": false,
+    "note": "Health checks configuration, not actual Gemma access."
+  },
+  "dashboard_http_status": 200,
+  "sample_model_called": false,
+  "build": {
+    "status": "passed",
+    "production_build_executed": true,
+    "production_build_passed": true,
+    "template_files_present": true,
+    "specification_schema_validated": true,
+    "logs": [
+      "> snap2ship-generated-app@1.0.0 build",
+      "> vite build --base=./",
+      "vite v5.4.21 building for production...",
+      "transforming...",
+      "\u2713 27 modules transformed.",
+      "rendering chunks...",
+      "computing gzip size...",
+      "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
+      "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
+      "dist/assets/index-D_5j_J7T.js   148.14 kB \u2502 gzip: 48.04 kB",
+      "\u2713 built in 2.18s",
+      "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
+    ],
+    "output_files": [
+      "index.html",
+      "assets/index-D_5j_J7T.js",
+      "assets/index-D9Ji5L3v.css"
+    ],
+    "duration_seconds": 2.66,
+    "exit_code": 0
+  },
+  "preview_kind": "compiled_react",
+  "zip_valid": true,
+  "memory_limit_mib": 512,
+  "cpu_limit": 1
+}

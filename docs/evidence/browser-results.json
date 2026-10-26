@@ -1,0 +1,69 @@
+{
+  "environment": "local same-origin server",
+  "model_called": false,
+  "sample": "curated fictional fixture",
+  "checks": [
+    {
+      "check": "Actual image upload and input preview",
+      "status": "passed"
+    },
+    {
+      "check": "Real analyze endpoint returns 503 without key; no simulated AI success",
+      "status": "passed"
+    },
+    {
+      "check": "Three distinct curated sample cards with disclosure",
+      "status": "passed"
+    },
+    {
+      "check": "Actual campus-create-companion.zip production build and React preview",
+      "status": "passed"
+    },
+    {
+      "check": "Event search, save, saved filter and remove",
+      "status": "passed"
+    },
+    {
+      "check": "Mobile preview toggle renders actual compiled app",
+      "status": "passed"
+    },
+    {
+      "check": "Browser ZIP download completes; source, lockfile, license and genuine build report present",
+      "status": "passed"
+    },
+    {
+      "check": "Actual ready-for-create-day.zip production build and React preview",
+      "status": "passed"
+    },
+    {
+      "check": "Checklist add, complete, filter, progress and delete",
+      "status": "passed"
+    },
+    {
+      "check": "Actual create-day-field-guide.zip production build and React preview",
+      "status": "passed"
+    },
+    {
+      "check": "Information search, expand/collapse and empty state",
+      "status": "passed"
+    },
+    {
+      "check": "Embedded information preview fragment navigation",
+      "status": "failed",
+      "diagnosis": "Existing srcdoc fragment links navigate the iframe to the hosting dashboard /#top instead of preserving the generated app. The generated preview then becomes blank. Exported event and information apps passed standalone fragment-navigation checks. Application source left unchanged during onboarding."
+    },
+    {
+      "check": "Actual create-day-field-guide.zip production build and React preview",
+      "status": "passed"
+    },
+    {
+      "check": "390px dashboard viewport has no horizontal overflow",
+      "status": "passed"
+    },
+    {
+      "check": "No browser JavaScript page errors",
+      "status": "passed"
+    }
+  ],
+  "page_errors": []
+}

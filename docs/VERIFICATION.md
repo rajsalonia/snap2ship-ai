@@ -1,42 +1,53 @@
-# Verification report — 26 October 2026
+# Verification — 26 October 2026
 
-Story: input image/text → validated planning specification → three ideas → selected trusted template → real compilation → compiled React preview → source ZIP.
+Current cloud validation at approximately 2:00 PM IST. No features or application logic were changed during this onboarding run. The coding cutoff remains 3:20 PM IST today.
 
-## Passing local checks
+## Source and scope
 
-| Check | Actual result |
+The complete uploaded `snap2ship-ai-integrations-ready.zip` was safely extracted and inspected, including `docs/INTEGRATION-STATUS.md`. Its original 10 backend tests and frontend compilation passed. The existing GitHub repository subsequently supplied newer application source at `1f531feb34b4bdd4a34809d80086a97ba7baf61b`; that source is the basis of this validation branch. Further UI/camera commits appeared on `main` during validation. They are preserved there and are **not covered by this report**. No force push, source replacement, reset, or feature rebuild was used. The imported archive remains preserved separately in the cloud workspace and a named Git stash.
+
+## Actual outcomes
+
+| Check | Result |
 | --- | --- |
-| Original backend baseline | 9 tests passed before edits |
-| Updated backend | 42 tests passed; no failures; 2 dependency deprecation warnings |
-| Dashboard production build | Passed; 1,584 modules transformed; JS ~170.62 kB, CSS ~16.50 kB before gzip |
-| Event generated-app production build | Passed, with HTML, bundled JS and stylesheet present |
-| Checklist generated-app production build | Passed, with HTML, bundled JS and stylesheet present |
-| Information-site generated-app production build | Passed, with HTML, bundled JS and stylesheet present |
-| ZIP API | Valid ZIP with source, lockfile, README, MIT license and actual build report |
-| Image validation | PNG/JPEG/WebP decoded; corrupt data, MIME mismatch, excessive size and invalid input rejected |
-| Provider boundary | Mock SDK tests cover text and image bytes; exact configured model is used |
-| Failure honesty | Missing key, quota/access errors, malformed output, compiler failure, timeout and unavailable compiler remain failures/unverified |
-| API security checks | Validation response omits submitted values; compiler environment excludes Gemini key; CORS and rate-limit tests pass |
-| Secret audit | No recognized credentials or private environment files in publishable source |
-| Browser sample flow | Three labelled sample proposals and a real compiled event app rendered |
-| Browser event interactions | Saving an event and searching for Web Workshop passed |
-| Browser checklist interactions | Added “Charge my laptop”, completed it, filtered Done; preview showed 1/4 complete |
+| Uploaded archive baseline | **10 passed**, no failures; one dependency deprecation warning |
+| Validated repository backend | **42 passed**, no failures; one Starlette/httpx deprecation warning |
+| Dashboard production build | **Passed**; Vite 5.4.21, 1,584 modules; same-origin `VITE_API_URL=/` |
+| Event, checklist and information templates | **All three genuinely compiled**; current compiler reports in `template-build-results.json` |
+| Browser sample flow | Actual image upload, missing-key 503, three explicitly curated proposals, real build, interactive React preview and browser-managed source ZIP download verified |
+| Event interactions | Search, save, saved-only filter and removal passed |
+| Checklist interactions | Add, complete, filter, progress and delete passed |
+| Information interactions | Search, expand/collapse and empty state passed; embedded navigation has the defect below |
+| Mobile | Preview toggle and 390px dashboard layout checked; no horizontal page overflow |
+| Exported source | Browser-downloaded event ZIP passed fresh `npm ci` and `npm run build`; exported information ZIP also passed a fresh install/build |
+| Local container | Built and started as non-root; dashboard, health, sample, real compilation, preview payload and valid ZIP passed with **512 MiB / 1 CPU** limits |
+| Repeatability | Complete saved installation script rerun successfully; `pip check` found no broken requirements |
+| Genuine Gemma text/image requests | **NOT RUN**: `GEMINI_API_KEY` is absent; `scripts/check_gemma.py --all` exits 2 |
+| DigitalOcean account, balance, promotional credits/expiry | **NOT VERIFIED**: credential absent; original read-only checker exits 2 |
+| DigitalOcean deployment / public workflow | **NOT RUN**: billing, credits, prepayment and overage protections remain unverified |
+| MLH form / acceptance | **NOT SUBMITTED**; no verified receipt or public deployment URL |
 
-Compiler details are recorded in `template-build-results.json`. The curated sample is not live AI output. Unit tests intentionally disable real compilation by default; the separate compiler checks perform genuine builds for all categories.
+The browser report records **14 passing checks and one confirmed application failure**; its aggregate exit status is **1**, not an all-pass result. Early rapid-click attempts were timing-sensitive; the completed run uses paced interactions. No sample result is described as live AI output. Screenshots are from the local curated-sample workflow, not DigitalOcean or Gemini.
 
-## Not yet verified
+## Confirmed application defect
 
-- Genuine Gemma text, image-plus-text and structured-output requests: **NOT RUN**, because `GEMINI_API_KEY` is absent and the owner chose to continue without live access.
-- DigitalOcean public deployment, account credits and production CORS/health: awaiting account access and cost/credit verification.
-- Docker image: configuration authored; local Docker engine was not running. GitHub Actions includes a container build check; its result must be inspected separately.
-- Browser-managed source download: the in-app browser download observation timed out. ZIP validity and contents pass through the actual API; browser download behavior requires another browser check.
-- Information-site runtime interactions and full mobile viewport behavior: production compilation passed; further browser checks are still pending.
-- Hackathon form submission/acceptance: no form destination or receipt has been verified.
+In the compiled `srcdoc` preview, fragment links such as **Back to top** resolve against the hosting dashboard URL. Clicking the link navigated the iframe to the dashboard's `/#top` and left the generated preview. Search, expansion, task controls, compilation and source download still worked. Application source was left unchanged during onboarding; fixing embedded fragment navigation is a separate coding change. Do not demonstrate these links as working inside the preview.
 
-## Corrected failures
+Standalone exported event and information app fragment navigation **passed**, as recorded separately in `evidence/standalone-results.json`. This defect does not justify calling the live, deployed end-to-end workflow verified.
 
-The first generated-app build caught an invalid stylesheet import; it was removed and all three builds passed. Browser testing caught form submission blocked inside the sandboxed preview; task creation now uses direct button/keyboard handlers and the add/complete/filter interaction passed. Initial sandbox restrictions on Node subprocesses were resolved by running the authorized compiler checks with the required execution access.
+## Container and setup details
 
-## Remaining limits
+The managed cloud requires a session CA for package traffic. A local Dockerfile variant outside the checkout adds BuildKit CA mounts to npm/pip installation steps, preserving TLS checks; it makes no application changes and is not a modified deployment specification. The tracked Dockerfile was not rewritten. Initial non-root startup failed because local checkout files had restrictive permissions; tracked source read/traverse permissions were normalized, then the image was rebuilt and successfully exercised. No credential was baked into the image.
 
-Only three template categories are supported. Compilation is not a test of every interaction or factual accuracy. No database, authentication, payments, registration, notifications, distributed rate limits, automatic generated-app publishing, or Gradient AI integration is claimed. The iframe has session-only state; standalone apps persist state locally when browser storage is available.
+The standard virtual environment, frontend dependencies, template compiler and compiled dashboard are prepared. Install and startup instructions are saved in the environment configuration draft, alongside missing Gemini and DigitalOcean secret requirements. Saving a draft does not inject credentials or publish a new environment; review/save and publication remain separate user actions.
+
+## Evidence and submission assets
+
+- `evidence/backend-tests.xml`, `evidence/uploaded-baseline-tests.xml`: actual pytest runs.
+- `evidence/browser-results.json`: successful interactions and failed embedded navigation kept distinct.
+- `evidence/container-results.json`: current container health and real compiler results.
+- `evidence/source-provenance.json`: archive digest and exact application commit tested.
+- `screenshots/01-input-studio.png` through `07-mobile-dashboard.png`: local sample screenshots; the older `03-compiled-preview.png` is retained from the prior repository.
+- `SUBMISSION.md` and `VIDEO-SCRIPT.md`: prepared text, not a submitted form or produced video.
+
+External services remain blocked pending secure credential configuration. Verify credit expiry, App Platform applicability, price, usage and charge liability before any DigitalOcean provisioning. No paid resources or prepayment were created by this session.

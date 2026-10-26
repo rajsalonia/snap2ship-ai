@@ -8,7 +8,7 @@ One Docker-based web service serves both the compiled React dashboard and the Fa
 
 The reviewed configuration is `.do/app.yaml`: Bangalore region, one `apps-s-1vcpu-0.5gb` instance, port 10000, `/health`, and preserved path prefixes. The dashboard is built with `VITE_API_URL=/`, so `/health` and `/api/*` use the same origin. `ALLOWED_ORIGINS` is bound to `${APP_URL}`.
 
-DigitalOcean listed this instance at $5/month on 26 October 2026, billed by usage. Confirm the actual creation-screen cost and available promotional credits first. No paid resource or prepayment is authorized solely by this file.
+An earlier preparation note estimated $5/month for this instance. That is **not an independently verified current quote or an account-specific projection**. Actual pricing, promotional credit amount, expiry, applicability and overage liability remain unknown in this cloud session. Confirm the final creation-screen quote, current usage, credit coverage and a reliable spending control before provisioning. Credits or billing alerts alone do not establish a hard spending cap. No paid resource or prepayment is authorized solely by this file.
 
 ## Before creating the app
 

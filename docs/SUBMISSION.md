@@ -109,3 +109,9 @@ Current saved image: `docs/screenshots/03-compiled-preview.png`. Additional scre
 - Disclose missing live Gemma access until real checks pass.
 - Keep API keys and account/billing screens out of the submission.
 - Submit to the event's actual form and confirm acceptance before 4:00 PM IST. No submission receipt has been obtained by this build process.
+
+## Current cloud validation addendum
+
+Use `codex/validated-submission-20261026` for this tested snapshot. The current run verified 42 backend tests, dashboard compilation, all three generated templates, local container behavior and browser ZIP download. Embedded fragment navigation has a documented failure; do not state that every UI interaction passed. The sample screenshots are local and curated, not evidence of genuine Gemma output or DigitalOcean deployment.
+
+Seven current screenshots are in `docs/screenshots/01-input-studio.png`, `02-curated-ideas.png`, `03-current-compiled-preview.png`, `04-mobile-preview.png`, `05-checklist-preview.png`, `06-info-preview.png`, and `07-mobile-dashboard.png`. See `VIDEO-SCRIPT.md` for the current truthful recording script. No video has been produced and no submission has been sent. Read `VERIFICATION.md` before copying claims into the event form.
