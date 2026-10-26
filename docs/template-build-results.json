@@ -16,16 +16,16 @@
       "computing gzip size...",
       "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
       "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
-      "dist/assets/index-D_5j_J7T.js   148.14 kB \u2502 gzip: 48.04 kB",
-      "\u2713 built in 734ms",
+      "dist/assets/index-C5iEiW_h.js   148.34 kB \u2502 gzip: 48.11 kB",
+      "\u2713 built in 1.02s",
       "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
     ],
     "output_files": [
       "index.html",
-      "assets/index-D9Ji5L3v.css",
-      "assets/index-D_5j_J7T.js"
+      "assets/index-C5iEiW_h.js",
+      "assets/index-D9Ji5L3v.css"
     ],
-    "duration_seconds": 1.84,
+    "duration_seconds": 2.78,
     "exit_code": 0
   },
   {
@@ -45,16 +45,16 @@
       "computing gzip size...",
       "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
       "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
-      "dist/assets/index-BPiEgl3p.js   146.15 kB \u2502 gzip: 47.51 kB",
-      "\u2713 built in 885ms",
+      "dist/assets/index-CzR2t_QL.js   146.35 kB \u2502 gzip: 47.59 kB",
+      "\u2713 built in 972ms",
       "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
     ],
     "output_files": [
       "index.html",
-      "assets/index-BPiEgl3p.js",
+      "assets/index-CzR2t_QL.js",
       "assets/index-D9Ji5L3v.css"
     ],
-    "duration_seconds": 2.02,
+    "duration_seconds": 2.3,
     "exit_code": 0
   },
   {
@@ -74,16 +74,16 @@
       "computing gzip size...",
       "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
       "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
-      "dist/assets/index-DcgrZr_o.js   145.19 kB \u2502 gzip: 47.10 kB",
-      "\u2713 built in 805ms",
+      "dist/assets/index-ihiNC1_p.js   145.41 kB \u2502 gzip: 47.17 kB",
+      "\u2713 built in 1.06s",
       "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
     ],
     "output_files": [
       "index.html",
       "assets/index-D9Ji5L3v.css",
-      "assets/index-DcgrZr_o.js"
+      "assets/index-ihiNC1_p.js"
     ],
-    "duration_seconds": 1.86,
+    "duration_seconds": 2.3,
     "exit_code": 0
   }
 ]

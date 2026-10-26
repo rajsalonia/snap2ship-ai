@@ -2,6 +2,14 @@
 
 Story: input image/text → validated planning specification → three ideas → selected trusted template → real compilation → compiled React preview → source ZIP.
 
+## Verified public deployment
+
+**https://snap2ship-ai-api.onrender.com/** is live on the free Render plan. Deployed code revision: `8be73aacfe993862f45ac0392c037ce3a5f6661a`; [its Linux CI passed](https://github.com/rajsalonia/snap2ship-ai/actions/runs/40297446895).
+
+Public checks passed: dashboard HTTP 200, health HTTP 200 with compiler available, exactly three labelled curated proposals, real event/checklist/information-site builds, compiled React previews and valid 11-file source ZIPs. Empty analysis input returned HTTP 400; analysis without a provider key returned the expected HTTP 503. This is not a successful live Gemma test. See [actual public build logs](live-verification.json).
+
+Free hosting can sleep after inactivity; allow time for the service to wake before presenting.
+
 ## Passing local checks
 
 | Check | Actual result |
@@ -36,9 +44,9 @@ Compiler details are recorded in `template-build-results.json`. The curated samp
 ## Not yet verified
 
 - Genuine Gemma text, image-plus-text and structured-output requests: **NOT RUN**, because `GEMINI_API_KEY` is absent and the owner chose to continue without live access.
-- DigitalOcean public deployment and production CORS/health: not verified. The reviewed $5/month service requires billing activation, which the owner declined. No paid service was created.
+- DigitalOcean public deployment and split-origin CORS: not verified. The owner approved a free static frontend with the free Render API. The $0/month static-site wizard still requires account verification. No paid service was created. Same-origin production frontend/API communication on Render is verified.
 - Full dashboard phone-viewport override: browser automation timed out. The embedded 390-pixel mobile preview was verified separately.
-- Hackathon form submission/acceptance: no form destination or receipt has been verified.
+- Hackathon form submission/acceptance: the [official form](https://www.mlh.com/events/hacktoberfest-hack-day-delhi-x-skillop-dtu/submissions/new) was located, but requires owner MLH sign-in. No submission receipt has been obtained.
 
 ## Corrected failures
 

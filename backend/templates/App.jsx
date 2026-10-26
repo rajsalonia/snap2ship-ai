@@ -57,14 +57,21 @@ function Information() {
     <input aria-label="Search information" className="info-search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Find information…"/>
     {sections.map((section, index) => <details key={section.heading} open={index === 0}><summary>{section.heading}</summary><p>{section.body}</p></details>)}
     {!sections.length && <p className="empty">No matching information. Try a different search.</p>}
-    <a className="text-link" href="#top">Back to top ↑</a>
+    <a className="text-link" href="#top" onClick={scrollToId('top')}>Back to top ↑</a>
   </section>;
+}
+
+function scrollToId(id) {
+  return event => {
+    event?.preventDefault();
+    document.getElementById(id)?.scrollIntoView({behavior: 'smooth'});
+  };
 }
 
 export default function App() {
   return <main className="container" id="top">
-    <nav><a className="wordmark" href="#top"><span className="mark">S</span>{content.title}</a><a href="#workspace">{content.type === 'event' ? 'Explore events' : content.type === 'checklist' ? 'My checklist' : 'Explore guide'} ↗</a></nav>
-    <header><div className="hero-copy"><p className="eyebrow">BUILT FOR {content.audience}</p><h1>{content.title}</h1><p>{content.tagline}</p><a className="cta" href="#workspace">Get started <span>↗</span></a></div><div className="hero-art" aria-hidden="true"><div className="orbit"></div><span>{content.type === 'event' ? '◷' : content.type === 'checklist' ? '✓' : 'i'}</span><p>Small app.<br/>Real possibility.</p></div></header>
+    <nav><a className="wordmark" href="#top" onClick={scrollToId('top')}><span className="mark">S</span>{content.title}</a><a href="#workspace" onClick={scrollToId('workspace')}>{content.type === 'event' ? 'Explore events' : content.type === 'checklist' ? 'My checklist' : 'Explore guide'} ↗</a></nav>
+    <header><div className="hero-copy"><p className="eyebrow">BUILT FOR {content.audience}</p><h1>{content.title}</h1><p>{content.tagline}</p><a className="cta" href="#workspace" onClick={scrollToId('workspace')}>Get started <span>↗</span></a></div><div className="hero-art" aria-hidden="true"><div className="orbit"></div><span>{content.type === 'event' ? '◷' : content.type === 'checklist' ? '✓' : 'i'}</span><p>Small app.<br/>Real possibility.</p></div></header>
     <div className="pills">{content.features.map(feature => <span key={feature}>{feature}</span>)}</div>
     {content.type === 'event' ? <><EventTracker/><Checklist/></> : content.type === 'checklist' ? <Checklist/> : <Information/>}
     <section className="source card"><p className="eyebrow">SOURCE DETAILS · REVIEW REQUIRED</p><div className="facts">{content.facts.length ? content.facts.map((fact, i) => <p key={i}>{fact}</p>) : <p>No source facts provided.</p>}</div></section>

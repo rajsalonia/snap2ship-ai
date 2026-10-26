@@ -1,6 +1,14 @@
 # Deploy Snap2Ship on DigitalOcean App Platform
 
-**Status: configuration prepared; account access, credits and public deployment remain to be verified.** This guide does not claim a live DigitalOcean or Gradient AI integration.
+**Status: the free static frontend is prepared and awaiting owner account verification.** Its wizard confirmed $0/month. No DigitalOcean deployment or Gradient AI integration is claimed. The complete working demo is already verified on [free Render](https://snap2ship-ai-api.onrender.com/).
+
+## Authorized free route
+
+Use the [free static-site deployment](https://cloud.digitalocean.com/apps/new?repo=https://github.com/rajsalonia/snap2ship-ai/tree/digitalocean-free-20261026). That branch has a static-only `.do/app.yaml` and deployment template: build `frontend` with `npm ci --ignore-scripts --no-audit --no-fund && npm run build`, publish `dist`, and set `VITE_API_URL=https://snap2ship-ai-api.onrender.com` at build time. No web-service component is selected.
+
+The wizard requires owner payment-method/account verification even though its selected site costs $0/month. Only the owner can complete that step. After creation, add the site's exact HTTPS origin to the Render API's `ALLOWED_ORIGINS`, redeploy the API and verify the actual frontend-to-API sample/build flow before claiming DigitalOcean hosting.
+
+The remaining Docker instructions describe the original paid option. It was not activated and is not the authorized free deployment.
 
 ## Deployment shape
 

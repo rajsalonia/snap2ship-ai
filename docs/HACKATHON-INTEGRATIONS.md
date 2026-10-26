@@ -20,6 +20,8 @@ Snap2Ship AI is a **photo-first, open-source Gemma 4 micro-app factory**. This d
 
 ## DigitalOcean (MLH category sponsor)
 
+Current evidence: the complete app is [live on free Render](https://snap2ship-ai-api.onrender.com/), with all three public template builds verified. DigitalOcean's free static frontend is prepared on `digitalocean-free-20261026`; the wizard confirms $0/month but requires owner account verification. No DigitalOcean hosting is claimed yet, and no paid resource was activated.
+
 - `.do/app.yaml` and `Dockerfile` prepare a **single DigitalOcean App Platform deployment** for React + FastAPI on one origin. The user must attach GitHub source, provide an encrypted Gemini API key, and verify credits / cost settings.
 - This does **not** mean the project has been deployed on DigitalOcean.
 - Gradient Inference/ADK, GPUs, knowledge bases, managed agents and auto-generated-app deployment are **not claimed** as integrated. They are not necessary for the chosen MVP.

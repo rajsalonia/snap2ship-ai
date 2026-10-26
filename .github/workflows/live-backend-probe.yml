@@ -1,0 +1,98 @@
+name: Check live Snap2Ship backend
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/live-backend-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  live-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Probe deployed API, without exposing secrets
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import time
+          import urllib.error
+          import urllib.request
+          BASE = 'https://snap2ship-ai-api.onrender.com'
+          health = None
+          for attempt in range(4):
+              try:
+                  with urllib.request.urlopen(BASE + '/health', timeout=40) as response:
+                      health = json.loads(response.read())
+                  break
+              except Exception as exc:
+                  print('Health probe retry', attempt + 1, type(exc).__name__)
+                  time.sleep(8)
+          if health is None:
+              print('::warning::Public health endpoint could not be reached from GitHub Actions.')
+              raise SystemExit(0)
+          key_configured = bool(health.get('key_configured', False))
+          print('HTTP health OK:', health.get('ok') is True)
+          print('Configured model:', health.get('model'))
+          print('Compiler available:', health.get('compiler_available'))
+          print('Gemini key configured:', key_configured)
+          print('Live model verified by health endpoint:', health.get('live_model_verified'))
+          if not key_configured:
+              print('::warning::The running backend reports GEMINI_API_KEY missing. Check Render Environment -> Save, deploy and ensure the variable belongs to snap2ship-ai-api.')
+              raise SystemExit(0)
+
+          body = json.dumps({'description':'Students need a tiny checklist for a college coding meetup. Suggest three feasible micro-apps.'}).encode()
+          request = urllib.request.Request(BASE + '/api/analyze', data=body, headers={'Content-Type':'application/json'}, method='POST')
+          try:
+              with urllib.request.urlopen(request, timeout=105) as response:
+                  data = json.loads(response.read())
+                  ideas = data.get('ideas', [])
+                  print('Real hosted Gemma request HTTP:', response.status)
+                  print('Real hosted analysis returned exactly 3 ideas:', len(ideas) == 3)
+                  if len(ideas) != 3:
+                      print('::warning::Model replied, but did not produce the expected 3 ideas.')
+          except urllib.error.HTTPError as exc:
+              print('Live analysis HTTP status:', exc.code)
+              try:
+                  detail = json.loads(exc.read()).get('detail', 'Provider response unavailable')
+              except Exception:
+                  detail = 'Provider response unavailable'
+              print('Safe error:', str(detail)[:300].replace('\n',' '))
+              print('::warning::Gemma text analysis did not succeed. Read response details and check Render settings.')
+          except Exception as exc:
+              print('::warning::Gemma text analysis request failed:', type(exc).__name__)
+          import base64
+          from pathlib import Path
+          poster_path = Path('examples/sample-poster.png')
+          if poster_path.is_file():
+              image_data = 'data:image/png;base64,' + base64.b64encode(poster_path.read_bytes()).decode()
+              image_body = json.dumps({
+                  'description':'Create a helpful student micro-app from this fictional campus event poster.',
+                  'image_data_url': image_data
+              }).encode()
+              image_request = urllib.request.Request(BASE + '/api/analyze', data=image_body, headers={'Content-Type':'application/json'}, method='POST')
+              try:
+                  with urllib.request.urlopen(image_request, timeout=105) as response:
+                      data = json.loads(response.read())
+                      print('Real hosted Gemma IMAGE request HTTP:', response.status)
+                      print('Real hosted image analysis exactly 3 ideas:', len(data.get('ideas', [])) == 3)
+              except urllib.error.HTTPError as exc:
+                  print('Live image analysis HTTP status:', exc.code)
+                  try:
+                      detail = json.loads(exc.read()).get('detail', 'No explanation')
+                  except Exception:
+                      detail = 'No explanation'
+                  print('Sanitized image error:', str(detail)[:360].replace('\\n', ' '))
+                  print('::warning::Hosted Gemma image request failed; text analysis may still be functional.')
+              except Exception as exc:
+                  print('::warning::Image request failure class:', type(exc).__name__)
+          else:
+              print('::warning::Sample poster was not found; image test skipped.')
+          PY

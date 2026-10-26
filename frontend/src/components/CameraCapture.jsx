@@ -5,6 +5,9 @@ import {Camera, CameraOff, Check, RefreshCcw, X} from 'lucide-react';
 export default function CameraCapture({onClose, onCapture}) {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const closeRef = useRef(onClose);
+  // Parent render callbacks can change identity; camera permission must not restart for that.
+  closeRef.current = onClose;
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
   const [snapshot, setSnapshot] = useState('');
@@ -13,7 +16,7 @@ export default function CameraCapture({onClose, onCapture}) {
 
   useEffect(() => {
     let cancelled = false;
-    const closeOnEscape = (event) => { if (event.key === 'Escape') onClose(); };
+    const closeOnEscape = (event) => { if (event.key === 'Escape') closeRef.current(); };
     document.addEventListener('keydown', closeOnEscape);
     async function start() {
       if (!navigator.mediaDevices?.getUserMedia) {
@@ -26,8 +29,13 @@ export default function CameraCapture({onClose, onCapture}) {
         streamRef.current = stream;
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          await videoRef.current.play().catch(() => {});
-          setReady(true);
+          try {
+            await videoRef.current.play();
+            if (!cancelled) setReady(true);
+          } catch {
+            stream.getTracks().forEach(track => track.stop());
+            if (!cancelled) setError('Camera preview could not start. Check browser permissions or upload a photo.');
+          }
         }
       } catch (reason) {
         if (!cancelled) setError(reason?.name === 'NotAllowedError' ? 'Camera permission was denied. Allow camera access in your browser or upload a photo.' : 'Camera is unavailable. You can upload an existing image instead.');
@@ -40,11 +48,15 @@ export default function CameraCapture({onClose, onCapture}) {
       streamRef.current?.getTracks().forEach(track => track.stop());
       streamRef.current = null;
     };
-  }, [onClose, retryCount]);
+  }, [retryCount]);
 
   function takePhoto() {
     const video = videoRef.current;
-    if (!video || !video.videoWidth) return;
+    if (!video || !video.videoWidth) {
+      setError('Camera is still starting. Try again or upload a photo.');
+      setReady(false);
+      return;
+    }
     const canvas = document.createElement('canvas');
     const maxSide = 1920;
     const scale = Math.min(1, maxSide / Math.max(video.videoWidth, video.videoHeight));
