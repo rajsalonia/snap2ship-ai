@@ -1,0 +1,67 @@
+name: QA Gemma JPEG to compiled app
+on:
+  push:
+    paths:
+      - ".github/workflows/qa-live-jpeg-build.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  jpeg-to-app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "pillow>=11,<14" -q
+      - name: JPEG photo plus prompt to real compiled app and ZIP
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64,io,json,urllib.request,urllib.error,zipfile
+          from pathlib import Path
+          from PIL import Image
+          ROOT="https://snap2ship-ai-api.onrender.com"
+          def post(path,payload,timeout=130):
+              req=urllib.request.Request(ROOT+path,method="POST",data=json.dumps(payload).encode(),headers={"Content-Type":"application/json"})
+              try:
+                  with urllib.request.urlopen(req,timeout=timeout) as res:return res.status,json.loads(res.read())
+              except urllib.error.HTTPError as e:
+                  try: body=json.loads(e.read())
+                  except Exception:body={}
+                  return e.code,body
+          im=Image.open("examples/sample-poster.png").convert("RGB")
+          data=io.BytesIO()
+          im.save(data,format="JPEG",quality=88)
+          encoded=base64.b64encode(data.getvalue()).decode()
+          print("JPEG verified size",len(data.getvalue()),"bytes",flush=True)
+          status,analysis=post("/api/analyze",{
+              "description":"Students miss event deadlines in college posters. Extract supported information and propose three simple student microapps.",
+              "image_data_url":"data:image/jpeg;base64,"+encoded})
+          print("LIVE JPEG ANALYSIS HTTP",status,flush=True)
+          if status!=200:
+              print("SAFE DETAIL",str(analysis.get("detail",""))[:200],flush=True)
+              raise SystemExit(1)
+          ideas=analysis.get("ideas",[])
+          print("LIVE JPEG IDEA COUNT",len(ideas),flush=True)
+          assert len(ideas)==3
+          selected=ideas[0]
+          status,built=post("/api/build",{"analysis":analysis,"idea":selected})
+          print("REAL GEMMA JPEG IDEA BUILD HTTP",status,flush=True)
+          if status!=200:
+              print("SAFE DETAIL",str(built.get("detail",""))[:200],flush=True)
+              raise SystemExit(1)
+          valid=built.get("validation",{})
+          print("REAL GEMMA JPEG IDEA BUILD STATUS",valid.get("status"),"executed",valid.get("production_build_executed"),flush=True)
+          assert valid.get("production_build_passed") is True
+          assert built.get("preview_kind")=="compiled_react"
+          assert built.get("sample") is False
+          z=zipfile.ZipFile(io.BytesIO(base64.b64decode(built["zip_base64"])))
+          assert "BUILD-REPORT.json" in z.namelist()
+          assert json.loads(z.read("BUILD-REPORT.json")).get("production_build_passed") is True
+          print("REAL GEMMA JPEG END-TO-END PASSED",len(z.namelist()),"ZIP files",flush=True)
+          PY
