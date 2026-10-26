@@ -138,3 +138,42 @@ def test_production_frontend_served_without_shadowing_api(client):
     assert "Snap2Ship AI" in response.text
     assert client.get("/health").json()["ok"] is True
     assert client.get("/api/sample").json()["model_called"] is False
+
+
+def test_ai_capacity_guard_returns_actionable_retry_without_calling_provider(client, fake_model, monkeypatch):
+    import main
+
+    class BusySlots:
+        def acquire(self, blocking=False):
+            return False
+
+        def release(self):
+            raise AssertionError("Unacquired capacity must never be released")
+
+    monkeypatch.setattr(main, "MODEL_SLOTS", BusySlots())
+    response = client.post("/api/analyze", json={"description": "A college poster needs an event tracker"})
+    assert response.status_code == 429
+    assert response.headers["retry-after"] == "10"
+    assert "busy" in response.json()["detail"].lower()
+    assert fake_model == []
+
+
+def test_model_capacity_is_released_after_success(client, fake_model, monkeypatch):
+    import main
+
+    class TrackingSlots:
+        acquired = 0
+        released = 0
+
+        def acquire(self, blocking=False):
+            self.acquired += 1
+            return True
+
+        def release(self):
+            self.released += 1
+
+    slots = TrackingSlots()
+    monkeypatch.setattr(main, "MODEL_SLOTS", slots)
+    response = client.post("/api/analyze", json={"description": "Create an event tracker"})
+    assert response.status_code == 200
+    assert slots.acquired == slots.released == 1
