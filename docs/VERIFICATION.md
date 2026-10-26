@@ -36,7 +36,7 @@ Compiler details are recorded in `template-build-results.json`. The curated samp
 ## Not yet verified
 
 - Genuine Gemma text, image-plus-text and structured-output requests: **NOT RUN**, because `GEMINI_API_KEY` is absent and the owner chose to continue without live access.
-- DigitalOcean public deployment and production CORS/health: not yet verified. Account inspection found $25 Hacktoberfest credits expiring 29 October, plus a separate $5 inference trial; billing reports incomplete setup and no payment method.
+- DigitalOcean public deployment and production CORS/health: not verified. The reviewed $5/month service requires billing activation, which the owner declined. No paid service was created.
 - Full dashboard phone-viewport override: browser automation timed out. The embedded 390-pixel mobile preview was verified separately.
 - Hackathon form submission/acceptance: no form destination or receipt has been verified.
 
