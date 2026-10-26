@@ -10,6 +10,8 @@
 
 **Verified live URL:** https://snap2ship-ai-api.onrender.com/
 
+**Official submission form:** https://www.mlh.com/events/hacktoberfest-hack-day-delhi-x-skillop-dtu/submissions/new (owner MLH sign-in required).
+
 **Hosting:** Free Render service, including the React frontend, FastAPI and trusted compiler. The separate free DigitalOcean frontend is prepared but awaits account verification. No paid service was activated.
 
 ## Ready-to-paste project description

@@ -46,7 +46,7 @@ Compiler details are recorded in `template-build-results.json`. The curated samp
 - Genuine Gemma text, image-plus-text and structured-output requests: **NOT RUN**, because `GEMINI_API_KEY` is absent and the owner chose to continue without live access.
 - DigitalOcean public deployment and split-origin CORS: not verified. The owner approved a free static frontend with the free Render API. The $0/month static-site wizard still requires account verification. No paid service was created. Same-origin production frontend/API communication on Render is verified.
 - Full dashboard phone-viewport override: browser automation timed out. The embedded 390-pixel mobile preview was verified separately.
-- Hackathon form submission/acceptance: no form destination or receipt has been verified.
+- Hackathon form submission/acceptance: the [official form](https://www.mlh.com/events/hacktoberfest-hack-day-delhi-x-skillop-dtu/submissions/new) was located, but requires owner MLH sign-in. No submission receipt has been obtained.
 
 ## Corrected failures
 
