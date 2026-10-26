@@ -1,0 +1,14 @@
+.git
+.venv
+**/node_modules
+**/.work
+**/__pycache__
+**/.pytest_cache
+**/.env
+**/.env.*
+**/dist
+**/*.log
+docs/screenshots
+.vercel
+work
+outputs

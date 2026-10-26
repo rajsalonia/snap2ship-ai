@@ -8,3 +8,9 @@ dist/
 .venv/
 *.pyc
 .DS_Store
+.work/
+.vercel/
+*.log
+test-results/
+playwright-report/
+.local-logs/

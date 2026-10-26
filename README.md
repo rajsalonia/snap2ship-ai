@@ -1,61 +1,136 @@
-**QUICK START:** Read [START HERE](docs/SETUP-START-HERE.md), [DIGITALOCEAN GUIDE](docs/DIGITALOCEAN-DEPLOY.md), and [SUBMISSION CHECKLIST](docs/SUBMISSION.md).
+# Snap2Ship AI
 
-# Snap2Ship AI · Reality to Software
+### From Real-World Problems to Working Apps
 
-An open-source hackathon MVP: upload a real-world photo or describe a challenge; **Gemma 4** suggests three ranked micro-app ideas; choose one; preview and download a template-backed React/Vite project.
+Turn a campus poster, screenshot, handwritten note, or problem description into three scoped app proposals. Choose an idea to generate a functional React/Vite application, run a real production compilation, preview the compiled application, and download its source.
 
-> **Current limitations:** No automatic GitHub push or DigitalOcean deployment. Template assembly is not a real npm production build; generated project must be tested with `npm run build` before deployment. Image extraction is AI-generated and can be wrong. Do not use sensitive images. The hosted model requires Google AI Studio access/quota.
+Built for Hacktoberfest Hack Day Delhi × SKILLOP DTU, 26 October 2026. MIT licensed.
 
-## Fast setup (Windows PowerShell)
+## Implemented
 
-1. Generate a key at https://aistudio.google.com/apikey (never commit or paste this key).
-2. Open PowerShell in `backend/`:
+- PNG, JPEG and WebP drag-and-drop input, image preview and text-only input.
+- Official Google GenAI SDK integration with `gemma-4-26b-a4b-it`; an alternative Gemma model must be selected explicitly. No silent model substitution.
+- Exactly three distinct proposals with bounded Pydantic specifications, audience, complexity, at most three features and transparent feasibility scores.
+- Functional event tracker, checklist and information-site templates.
+- Temporary build workspaces, genuine `npm run build`, compiler logs, output checks and explicit passed/failed/unverified states.
+- Actual compiled React preview in a sandboxed iframe, desktop/mobile controls, source file summary and ZIP with lockfile, license and actual build report.
+- A separately labelled fictional sample that makes no model request.
+- GitHub Actions for backend tests, frontend compilation, three generated-app builds and the deployment container.
+
+**Live Gemma access is unverified:** no key was supplied and the owner chose to continue without a live provider test. SDK-boundary tests use mocks. Sample proposals are curated, not live AI output. **DigitalOcean deployment is prepared, not yet verified.** See [actual verification](docs/VERIFICATION.md).
+
+![Compiled React preview of the fictional sample](docs/screenshots/03-compiled-preview.png)
+
+## Quick start
+
+Use Python 3.12+ and Node.js 22+; Node 24 is recommended. From the repository root in PowerShell:
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-$env:GEMINI_API_KEY="YOUR_API_KEY"
-uvicorn main:app --reload --port 8000
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r backend\requirements-dev.txt
+cd backend\template-runtime
+npm ci --ignore-scripts --no-audit --no-fund
+cd ..\..
+cd frontend
+npm ci --no-audit --no-fund
+cd ..
 ```
 
-3. Open **another** PowerShell in `frontend/`:
+Copy `backend/.env.example` to `backend/.env` and configure your Google AI Studio key locally. Never commit it. The sample and app factory work without a key.
+
+Start the backend:
 
 ```powershell
-npm install
-npm run dev
+cd backend
+..\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-Visit http://localhost:5173. The API health endpoint is at http://localhost:8000/health.
+In another terminal:
 
-## Demo
+```powershell
+cd frontend
+npm run dev -- --host 127.0.0.1
+```
 
-Upload a (non-sensitive) college-event notice and describe what you want. Select an idea with status GO and click **Build selected app**. Review its static HTML preview and download the React/Vite ZIP. Extract, run `npm install && npm run build` to validate its actual production compilation.
+Open http://127.0.0.1:5173. Alternatively run `scripts/start-local.ps1`, which installs dependencies and starts hidden servers with logs under `.local-logs/`. On macOS/Linux, activate the Python environment and use `.venv/bin/python`.
+
+## Try it
+
+1. Click **Try a fictional campus poster**. This path is explicitly labelled and makes no AI call.
+2. Review source observations, three proposals and scoring explanations.
+3. Build the event tracker; inspect actual compiler logs and interact with its React preview.
+4. Search sessions, save an event, add a preparation task and complete it.
+5. Download the ZIP, extract it and run `npm ci`, `npm run build`, then `npm run preview`.
+
+For genuine analysis, upload `examples/sample-poster.png` and click **Analyze with Gemma** after configuring a usable key. This sends your input to Google; avoid sensitive images.
+
+| Template | Functional interactions |
+| --- | --- |
+| Event tracker | Search sessions, save/remove events, filter saved events, preparation checklist |
+| Checklist | Add, complete, delete and filter tasks; completion progress |
+| Information site | Search content, expand sections, page navigation |
+
+Generated apps use browser localStorage when available. Embedded previews keep state only for the current preview session. There are no accounts, payments, push notifications, registration services or databases.
 
 ## Architecture
 
-```text
-React dashboard -> FastAPI /api/analyze -> Gemma 4 hosted model (image + text)
-  -> Pydantic validation -> 3 idea cards -> /api/build
-  -> Deterministic React template + content.json -> HTML preview + ZIP
+```mermaid
+flowchart LR
+  A[Image and text] --> B[React Input Studio]
+  B --> C[FastAPI input validation]
+  C --> D[Gemma 4 via Gemini Developer API]
+  D --> E[Pydantic specifications and ranking]
+  E --> F[Three reviewable ideas]
+  F --> G[Trusted React templates plus JSON]
+  G --> H[Temporary workspace and real Vite build]
+  H --> I[Sandboxed compiled React preview]
+  H --> J[Source ZIP and build report]
 ```
 
-## Environmental configuration
+Only repository-controlled templates and package manifests are compiled. AI supplies structured data and specifications, never arbitrary executable code.
 
-- Backend: `GEMINI_API_KEY` (required); `GEMMA_MODEL` (default `gemma-4-26b-a4b-it`); `ALLOWED_ORIGINS` (comma-separated exact URLs)
-- Frontend: `VITE_API_URL` (must point to your deployed backend, or defaults to localhost)
-- `.env.example` files show variable names. Never commit `.env` or API tokens.
+## Configuration
 
-## Deployment options
+| Variable | Purpose |
+| --- | --- |
+| `GEMINI_API_KEY` | Backend-only Google AI Studio credential; optional for the curated sample |
+| `GEMMA_MODEL` | Default `gemma-4-26b-a4b-it`; explicit alternative `gemma-4-31b-it` |
+| `ALLOWED_ORIGINS` | Comma-separated exact frontend origins for split deployments |
+| `BUILD_VALIDATION` | `true` by default; also requires installed template runtime |
+| `VITE_API_URL` | Public backend URL for split deployment; `/` for same-origin Docker deployment |
 
-- Frontend: Vercel. Import repository, root directory `frontend`, build command `npm run build`, output `dist`, set `VITE_API_URL=https://YOUR_BACKEND_HOST`.
-- Backend: Render Web Service. Import the same repository, root directory `backend`, build `pip install -r requirements.txt`, start `uvicorn main:app --host 0.0.0.0 --port $PORT`. Add `GEMINI_API_KEY` and `ALLOWED_ORIGINS=https://YOUR_FRONTEND_HOST` in service environment variables.
-- DigitalOcean App Platform can be explored once credits, product availability and configuration are confirmed. Don't claim sponsor integration without working end-to-end deployment.
+Scoring rubric: MVP scope /40 + template fit /35 + source clarity /25. When present, the server computes the sum and derives GO ≥75, REVIEW ≥50, NO-GO <50. These are planning estimates, not independent market research.
 
-## Security and correctness
+## Test
 
-Image size and MIME type are checked, AI output is schema validated, preview text is HTML escaped, arbitrary model-generated code is not executed by the backend, and uploaded images aren't intentionally stored on disk. Validation in `/api/build` is **structural only**, never presented as verified compilation. API keys stay backend-side.
+```powershell
+cd backend
+..\.venv\Scripts\python.exe -m pytest -q
+cd ..
+.\.venv\Scripts\python.exe scripts\compile_samples.py
+cd frontend
+npm run build
+cd ..
+.\.venv\Scripts\python.exe scripts\audit_secrets.py
+.\.venv\Scripts\python.exe scripts\check_gemma.py --all
+```
 
-## License
+The last command makes real provider requests only with a configured key. Missing credentials mean **NOT RUN**, never a passing AI test.
 
-MIT. See LICENSE. Inspired by the general discover → rank → build → validate workflow of vibeDeploy, but uses visual physical-world input, narrowed template-backed generation, and a different educational/community-user focus. Not affiliated with vibeDeploy creators.
+## DigitalOcean
+
+[Deployment guide](docs/DIGITALOCEAN-DEPLOY.md) · [App specification](.do/app.yaml)
+
+The Dockerfile builds React and serves it with FastAPI under one origin. Node remains in the runtime for trusted template compilation. No database, GPU or paid agent framework is needed. Confirm account credits and actual service pricing before creating resources. Configure secrets only in encrypted runtime settings. The app-spec file is not evidence of deployment or Gradient AI integration.
+
+## Security and limits
+
+Images are limited to 5 MB and 16 megapixels and verified against their declared format. Model content and array/string lengths are bounded. Validation errors omit submitted values; provider errors omit raw credentials and headers. Compiler processes receive a restricted environment without the Gemini key. Preview origin isolation is retained, closing script tags are escaped and outbound preview connections are blocked by CSP.
+
+Builds are serialized and time-limited; API routes have per-process request limits. This prototype has no distributed limiter or authentication. Compilation verifies syntax and assets, not factual accuracy or every runtime interaction. Uploaded images are not intentionally written to disk; extracted content enters generated projects and downloads.
+
+## Originality
+
+Inspired by vibeDeploy's high-level discover → evaluate → build workflow. Snap2Ship uses original code and UI, image-led discovery of student/community needs, narrow templates, source-fact review and honest build evidence. It does not copy vibeDeploy source, branding or assets and is not affiliated with its creators.
+
+[Contributing](CONTRIBUTING.md) · [MIT license](LICENSE) · [Submission pack](docs/SUBMISSION.md)

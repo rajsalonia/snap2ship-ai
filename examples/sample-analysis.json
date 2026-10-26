@@ -1,0 +1,51 @@
+{
+  "source_summary": "A fictional Campus Create Day poster invites students to a design jam, a web workshop and a project showcase on 14 November 2026 at the Student Activity Centre.",
+  "problem": "Students need a clear way to find the sessions, save the ones they want to attend and prepare for the day.",
+  "facts": ["Campus Create Day is on 14 November 2026.", "The venue is the Student Activity Centre.", "Design Jam starts at 10:00 AM.", "Web Workshop starts at 12:00 PM.", "Project Showcase starts at 3:00 PM.", "The poster asks participants to bring a laptop and student ID."],
+  "actions": ["Bring a laptop", "Bring student ID", "Choose sessions to attend"],
+  "confidence_note": "Fictional curated sample, not live Gemma output. Dates and venue exist only for this demonstration; no registration or notification service is connected.",
+  "ideas": [
+    {
+      "title": "Campus Create Companion",
+      "pitch": "Find the day's sessions, save your favorites and get ready to take part.",
+      "audience": "Students attending Campus Create Day",
+      "template": "event", "verdict": "GO", "score": 94, "complexity": "low",
+      "score_breakdown": {"scope": 38, "template_fit": 34, "source_clarity": 22},
+      "reason": "The poster has clear sessions and times, and every proposed interaction fits the event template.",
+      "features": ["Search sessions", "Save favorite events", "Preparation checklist"],
+      "spec": {
+        "events": [
+          {"title": "Design Jam", "when": "14 Nov 2026 · 10:00 AM", "location": "Student Activity Centre", "detail": "A design session listed on the Campus Create Day poster."},
+          {"title": "Web Workshop", "when": "14 Nov 2026 · 12:00 PM", "location": "Student Activity Centre", "detail": "A web workshop listed on the poster. Bring your laptop."},
+          {"title": "Project Showcase", "when": "14 Nov 2026 · 3:00 PM", "location": "Student Activity Centre", "detail": "Explore student projects at the afternoon showcase."}
+        ],
+        "tasks": ["Bring a laptop", "Bring student ID", "Choose sessions to attend"], "sections": []
+      }
+    },
+    {
+      "title": "Ready for Create Day",
+      "pitch": "A focused preparation checklist that keeps the day's small tasks in one place.",
+      "audience": "First-time student participants",
+      "template": "checklist", "verdict": "GO", "score": 88, "complexity": "low",
+      "score_breakdown": {"scope": 37, "template_fit": 33, "source_clarity": 18},
+      "reason": "A small, useful checklist fits the builder well; students should confirm any extra preparation requirements.",
+      "features": ["Add preparation tasks", "Track completion", "Filter active tasks"],
+      "spec": {"events": [], "tasks": ["Bring a laptop", "Bring student ID", "Choose sessions to attend", "Review the event poster"], "sections": []}
+    },
+    {
+      "title": "Create Day Field Guide",
+      "pitch": "A searchable guide to the event, with the essential information in expandable sections.",
+      "audience": "Students exploring the event",
+      "template": "info", "verdict": "REVIEW", "score": 70, "complexity": "low",
+      "score_breakdown": {"scope": 29, "template_fit": 28, "source_clarity": 13},
+      "reason": "A guide is feasible, but the poster provides limited information beyond the schedule and preparation items.",
+      "features": ["Search event information", "Expand useful details", "Navigate the guide"],
+      "spec": {"events": [], "tasks": [], "sections": [
+        {"heading": "About Campus Create Day", "body": "A fictional student event on 14 November 2026 at the Student Activity Centre."},
+        {"heading": "The day's schedule", "body": "Design Jam: 10:00 AM. Web Workshop: 12:00 PM. Project Showcase: 3:00 PM."},
+        {"heading": "What to bring", "body": "Bring a laptop and student ID, as listed on the sample poster."},
+        {"heading": "Registration and accessibility", "body": "Registration links, fees and accessibility details were not provided on the fictional poster. Confirm these with the organizer before attending."}
+      ]}
+    }
+  ]
+}
