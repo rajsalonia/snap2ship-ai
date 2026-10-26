@@ -6,6 +6,16 @@ Turn a campus poster, screenshot, handwritten note, or problem description into 
 
 Built for Hacktoberfest Hack Day Delhi × SKILLOP DTU, 26 October 2026. MIT licensed.
 
+## New: photo-first glass studio
+
+The interface is now a floating, responsive glassmorphism experience rather than a fixed dashboard. It has a browser **Take a photo** flow (live preview, confirm or retake), **Upload image**, drag and drop, source preview, a three-idea discovery board and verified build preview.
+
+- Camera needs a secure context (**HTTPS or localhost**) and browser permission. If unavailable, Upload Image is always an option.
+- Camera frames stay local until the user chooses an image and explicitly presses **Analyze with Gemma**.
+- The model is `gemma-4-26b-a4b-it` through the Gemini Developer API; no custom model training is claimed.
+- Backend concurrency now limits simultaneous model calls to reduce accidental quota/credit consumption.
+- Read [Hackathon integration and sponsor-fit notes](docs/HACKATHON-INTEGRATIONS.md) for honest category eligibility and DigitalOcean deployment readiness.
+
 ## Implemented
 
 - PNG, JPEG and WebP drag-and-drop input, image preview and text-only input.
