@@ -38,6 +38,8 @@ app.add_middleware(CORSMiddleware,
 
 REQUESTS = defaultdict(deque)
 RATE_LOCK = threading.Lock()
+# Bound concurrent hosted model requests to protect API quota and avoid surprise credit usage.
+MODEL_SLOTS = threading.BoundedSemaphore(value=2)
 
 
 @app.middleware("http")
@@ -161,21 +163,26 @@ def analyze(payload: AnalyzeRequest):
         raise HTTPException(503, "Set GEMINI_API_KEY in backend/.env or your hosting provider's secret settings. Live AI analysis is unavailable; the sample is separately labelled.")
     if APP_MODEL not in ALLOWED_MODELS:
         raise HTTPException(503, "GEMMA_MODEL must explicitly select gemma-4-26b-a4b-it or gemma-4-31b-it. No model was substituted.")
+    if not MODEL_SLOTS.acquire(blocking=False):
+        raise HTTPException(429, "The AI engine is busy processing two requests. Retry shortly; no additional model call was made.", headers={"Retry-After": "10"})
     try:
-        from google import genai
-        from google.genai import types
-        parts = []
-        if image:
-            parts.append(types.Part.from_bytes(data=image[0], mime_type=image[1]))
-        parts.append(PROMPT + "\nJSON schema:\n" + json.dumps(Analysis.model_json_schema()) + "\nUntrusted user description:\n" + (payload.description or "[image only]"))
-        with genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(timeout=90_000)) as client:
-            response = client.models.generate_content(model=APP_MODEL, contents=parts,
-                config=types.GenerateContentConfig(temperature=0.3, max_output_tokens=6500))
-        return parse_analysis(response.text or "")
-    except HTTPException:
-        raise
-    except Exception as error:
-        raise provider_error(error) from None
+        try:
+            from google import genai
+            from google.genai import types
+            parts = []
+            if image:
+                parts.append(types.Part.from_bytes(data=image[0], mime_type=image[1]))
+            parts.append(PROMPT + "\nJSON schema:\n" + json.dumps(Analysis.model_json_schema()) + "\nUntrusted user description:\n" + (payload.description or "[image only]"))
+            with genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(timeout=90_000)) as client:
+                response = client.models.generate_content(model=APP_MODEL, contents=parts,
+                    config=types.GenerateContentConfig(temperature=0.3, max_output_tokens=6500))
+            return parse_analysis(response.text or "")
+        except HTTPException:
+            raise
+        except Exception as error:
+            raise provider_error(error) from None
+    finally:
+        MODEL_SLOTS.release()
 
 
 def sample_analysis() -> Analysis:
