@@ -7,8 +7,9 @@ Story: input image/text → validated planning specification → three ideas →
 | Check | Actual result |
 | --- | --- |
 | Original backend baseline | 9 tests passed before edits |
-| Updated backend | 42 tests passed; no failures; 2 dependency deprecation warnings |
-| Dashboard production build | Passed; 1,584 modules transformed; JS ~170.62 kB, CSS ~16.50 kB before gzip |
+| Updated backend | 44 tests passed; no failures; 2 dependency deprecation warnings |
+| Dashboard production build | Passed; 1,586 modules transformed; JS ~176.47 kB, CSS ~28.88 kB before gzip |
+| End-to-end pipeline check | Passed (`scripts/verify_pipeline.py`); verified health, 3 ideas, real Vite builds, preview and base64 ZIPs |
 | Event generated-app production build | Passed, with HTML, bundled JS and stylesheet present |
 | Checklist generated-app production build | Passed, with HTML, bundled JS and stylesheet present |
 | Information-site generated-app production build | Passed, with HTML, bundled JS and stylesheet present |

@@ -17,7 +17,7 @@
       "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
       "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
       "dist/assets/index-D_5j_J7T.js   148.14 kB \u2502 gzip: 48.04 kB",
-      "\u2713 built in 686ms",
+      "\u2713 built in 734ms",
       "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
     ],
     "output_files": [
@@ -25,7 +25,7 @@
       "assets/index-D9Ji5L3v.css",
       "assets/index-D_5j_J7T.js"
     ],
-    "duration_seconds": 1.74,
+    "duration_seconds": 1.84,
     "exit_code": 0
   },
   {
@@ -46,7 +46,7 @@
       "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
       "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
       "dist/assets/index-BPiEgl3p.js   146.15 kB \u2502 gzip: 47.51 kB",
-      "\u2713 built in 746ms",
+      "\u2713 built in 885ms",
       "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
     ],
     "output_files": [
@@ -54,7 +54,7 @@
       "assets/index-BPiEgl3p.js",
       "assets/index-D9Ji5L3v.css"
     ],
-    "duration_seconds": 1.74,
+    "duration_seconds": 2.02,
     "exit_code": 0
   },
   {
@@ -75,7 +75,7 @@
       "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
       "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
       "dist/assets/index-DcgrZr_o.js   145.19 kB \u2502 gzip: 47.10 kB",
-      "\u2713 built in 809ms",
+      "\u2713 built in 805ms",
       "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
     ],
     "output_files": [
@@ -83,7 +83,7 @@
       "assets/index-D9Ji5L3v.css",
       "assets/index-DcgrZr_o.js"
     ],
-    "duration_seconds": 1.98,
+    "duration_seconds": 1.86,
     "exit_code": 0
   }
 ]
