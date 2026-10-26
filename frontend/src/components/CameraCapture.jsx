@@ -9,6 +9,7 @@ export default function CameraCapture({onClose, onCapture}) {
   const [ready, setReady] = useState(false);
   const [snapshot, setSnapshot] = useState('');
   const [capturing, setCapturing] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -39,7 +40,7 @@ export default function CameraCapture({onClose, onCapture}) {
       streamRef.current?.getTracks().forEach(track => track.stop());
       streamRef.current = null;
     };
-  }, [onClose]);
+  }, [onClose, retryCount]);
 
   function takePhoto() {
     const video = videoRef.current;
@@ -70,7 +71,8 @@ export default function CameraCapture({onClose, onCapture}) {
   function retake() {
     setSnapshot('');
     setReady(false);
-    setError('Close and reopen the camera to take another photo.');
+    setError('');
+    setRetryCount(count => count + 1);
   }
 
   return <div className="camera-backdrop" role="presentation" onMouseDown={event => {if (event.target === event.currentTarget) onClose();}}>
