@@ -1,0 +1,109 @@
+/* Snap2Ship Atmosphere — floating, image-first studio (no fixed dashboard sidebar) */
+:root{color-scheme:dark;--s2s-bg:#060914;--s2s-glass:rgba(20,27,48,.46);--s2s-stroke:rgba(204,222,255,.16);--s2s-text:#f3f6ff;--s2s-muted:#a5afc9;--s2s-primary:#b5a8ff}
+body{background:#060914;color:var(--s2s-text)}
+.experience-shell{display:block;position:relative;min-height:100vh;isolation:isolate;overflow:clip;background:radial-gradient(ellipse at 48% -6%,rgba(115,83,205,.2),transparent 48%),radial-gradient(ellipse at 90% 60%,rgba(31,117,173,.12),transparent 35%),linear-gradient(152deg,#070a16,#0b1022 47%,#080b16)}
+.ambient{position:absolute;border-radius:50%;pointer-events:none;filter:blur(72px);opacity:.58;z-index:-1}
+.aurora-one{width:520px;height:520px;top:105px;right:-190px;background:radial-gradient(circle,#8a64fa66,transparent 68%)}
+.aurora-two{width:520px;height:520px;top:580px;left:-250px;background:radial-gradient(circle,#1c98ce44,transparent 66%)}
+.aurora-three{width:440px;height:440px;top:1420px;right:2%;background:radial-gradient(circle,#d56ab83a,transparent 70%)}
+.glass,.floating-nav,.hero-glass,.experience-shell .panel,.experience-shell .ideacard,.experience-shell .empty-grid>div,.experience-shell .build-stats>div,.experience-shell .summary,.experience-shell .textentry,.experience-shell .upload,.experience-shell .review,.experience-shell .activity,.experience-shell .source-details,.experience-shell .artifact-details>details{background:var(--s2s-glass);border:1px solid var(--s2s-stroke);box-shadow:0 20px 70px rgba(0,0,0,.21),inset 0 1px 0 rgba(255,255,255,.055);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.floating-nav{position:sticky;top:13px;z-index:20;width:min(1140px,calc(100% - 40px));margin:15px auto 0;padding:10px 15px 10px 19px;border-radius:22px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.experience-shell .brand{padding:0;flex-shrink:0;font-family:Outfit,sans-serif;font-size:23px;line-height:1.06}
+.experience-shell .brand small{color:#a8a7d6;font-size:8px;margin-top:5px;letter-spacing:1.9px}
+.experience-shell .brandicon{background:linear-gradient(135deg,#8273ea,#42a3d0);box-shadow:0 6px 25px #6357cf55;border-radius:14px}
+.floating-links{display:flex;align-items:center;gap:28px;margin-left:auto}
+.floating-links a,.nav-github{font-size:12px;color:#c3cae3;font-weight:600;transition:color .2s}
+.floating-links a:hover,.nav-github:hover{color:white}
+.nav-github{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid #ffffff2e;border-radius:13px;background:#ffffff0b}
+.experience-shell .workspace{width:100%}
+.experience-shell .topbar{max-width:1130px;margin:22px auto 0;padding:12px 25px;border:0;color:#b7bfdb}
+.experience-shell .topbar strong{color:#eff1ff}
+.experience-shell .topbar .tag{color:#d2c9ff;border-color:#ffffff27;background:#ffffff0b}
+.experience-shell .wrap{max-width:1180px;padding:25px 26px 75px}
+.hero-glass{padding:57px 55px 31px;margin:0 0 22px;border:1px solid rgba(181,160,246,.18);border-radius:34px;background:linear-gradient(108deg,rgba(64,45,124,.27),rgba(11,25,47,.25) 74%);position:relative;overflow:hidden}
+.hero-glass:after{content:'';position:absolute;pointer-events:none;right:-95px;top:-150px;width:470px;height:470px;border:1px solid rgba(219,209,255,.15);border-radius:50%;box-shadow:0 0 0 55px rgba(180,162,250,.03),0 0 0 125px rgba(180,162,250,.025)}
+.hero-glass>*{position:relative;z-index:1}
+.experience-shell .sup,.experience-shell .kicker{font-size:10px;letter-spacing:2.5px;color:#bdb0ff}
+.starburst{font-size:19px;color:#ded2ff}
+.experience-shell .hero h1{font:700 clamp(40px,6.5vw,83px)/1.04 Outfit,system-ui,sans-serif;letter-spacing:-3.8px;max-width:850px;margin:23px 0 19px}
+.experience-shell .hero em{color:#d7d0ff;background:linear-gradient(95deg,#f3d4ff,#9aafff,#a9e7ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.experience-shell .hero p{max-width:660px;font-size:15px;line-height:1.9;color:#c0c3db}
+.hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:26px 0}
+.primary-action,.glass-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:14px;padding:12px 17px;border:1px solid transparent;font:700 12px 'DM Sans',system-ui;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+.primary-action,.experience-shell .bottom button,.experience-shell .idea-actions .build-card{color:#161126;background:linear-gradient(130deg,#c5a8ff,#a2d8fe);border-color:#eadfff66;box-shadow:0 8px 34px #957fee36}
+.primary-action:hover:not(:disabled),.glass-button:hover:not(:disabled),.experience-shell .bottom button:hover:not(:disabled){transform:translateY(-2px)}
+.primary-action:disabled,.glass-button:disabled{opacity:.46;cursor:not-allowed}
+.glass-button{color:#edf0ff;border-color:#ffffff33;background:rgba(255,255,255,.09)}
+.glass-button:hover:not(:disabled){background:rgba(255,255,255,.16)}
+.glow-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#d4cdf8;margin-left:5px}
+.experience-shell .hero-meta{margin:28px 0 20px;color:#bec3da;font-size:11px}
+.experience-shell .hero-meta svg{color:#b3a3ff}
+.experience-shell .steps{margin-top:32px;border-top:1px solid #ffffff23;padding-top:23px;gap:9px}
+.experience-shell .steps>span{border-radius:999px;padding:8px 12px;background:#ffffff07;border-color:#ffffff18;color:#8f96b4}
+.experience-shell .steps>span.current{background:#b5a8ff19;border-color:#baa8ff45;color:#f1eaff}
+.experience-shell .steps>.current b{background:#bbaeff;color:#20123e}
+.experience-shell .panel{border-radius:27px;padding:30px;margin-bottom:22px}
+.experience-shell .ptitle h2{font-size:27px;font-weight:650;letter-spacing:-.8px}
+.experience-shell .faded{color:#bdc4e0}
+.experience-shell .inputgrid{grid-template-columns:1fr 1fr;gap:18px}
+.experience-shell .upload{background:linear-gradient(145deg,#8480e31a,#59b1cf0a);min-height:250px;border-style:dashed;border-color:#c6b1ff75;border-radius:21px}
+.experience-shell .upload:hover,.experience-shell .upload.dragging{border-color:#dddcff;background:#9990f022}
+.experience-shell .upload img{opacity:.33;filter:saturate(.85)}
+.experience-shell .uploadicon{background:#9c91ff22;color:#c3b5ff;border:1px solid #c5b6ff38}
+.experience-shell .upload strong{font-size:15px;color:#f1efff}
+.experience-shell .upload small{color:#a1a9c4;font-size:11px}
+.experience-shell .upload-limit{color:#b2a6d3}
+.experience-shell .textentry{border-radius:21px;padding:20px;min-height:250px}
+.experience-shell .textentry label{color:#b2a2ee}
+.experience-shell .textentry textarea{font-size:14px;color:#edf1ff}
+.experience-shell .textentry textarea::placeholder{color:#828aaa}
+.experience-shell .textentry span{color:#aab1ca}
+.source-actions{display:flex;gap:9px;margin:11px 0 3px}
+.source-actions .glass-button{flex:1;padding:11px}
+.experience-shell .remove-image{bottom:56px;right:12px;background:#11172bea;border-color:#d0bafa55;color:#ede7ff;border-radius:11px;padding:7px 10px;font-size:10px}
+.experience-shell .bottom{border-color:#ffffff24;margin-top:22px}
+.experience-shell .bottom span{color:#b9bed8}
+.experience-shell .bottom b{color:#e2d3ff}
+.experience-shell .bottom button{border-radius:13px;font-size:12px;padding:13px 18px}
+.experience-shell .summary{border-radius:17px;padding:21px;background:#ffffff08}
+.experience-shell .summary p{color:#e5e9ff}
+.experience-shell .summary small{color:#b3bfd7}
+.experience-shell .source-details,.experience-shell .review{border-radius:14px}
+.experience-shell .source-details summary,.experience-shell .review{color:#c9cbe3}
+.experience-shell .cards{gap:17px}
+.experience-shell .ideacard{border-radius:19px;min-height:390px;padding:23px;transition:transform .2s,border-color .2s,background .2s}
+.experience-shell .ideacard:hover{transform:translateY(-4px)}
+.experience-shell .ideacard.selected{border-color:#c9b6ff9c;background:linear-gradient(170deg,#7260ce21,#ffffff07);box-shadow:0 0 0 1px #c6aafd3b,0 15px 38px #07081644}
+.experience-shell .ideacard h3{color:#f5f3ff}
+.experience-shell .ideacard p{color:#c3c9e3}
+.experience-shell .idea-actions .build-card{border-radius:10px;color:#201831}
+.experience-shell .idea-actions .select-button{border-color:#ffffff2e;border-radius:10px;color:#d9d7ef}
+.experience-shell .score-track{background:#ffffff22}
+.experience-shell .score-track span{background:linear-gradient(90deg,#9a83f7,#a5e4f2)}
+.experience-shell .build-stats>div{border-radius:13px}
+.experience-shell .build-stats b{color:#eef2ff}
+.experience-shell .empty-grid>div{border-radius:17px;padding:24px}
+.experience-shell .empty-grid h3{color:#d9dcf6}
+.experience-shell .empty-grid p{color:#aab5d1}
+.experience-shell .activity{border-radius:18px;color:#e1d0ff}
+.experience-shell .error{border-radius:16px}
+.experience-shell .previewheader{background:#141b2c80}
+.experience-shell .preview-stage{background:#0a0c18}
+.sponsor-strip{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;border-top:1px solid #ffffff18;border-bottom:1px solid #ffffff18;padding:24px 8px;margin:37px 0 20px;color:#adb4d0;font-size:11px}
+.sponsor-strip span{display:inline-flex;align-items:center;gap:7px}.sponsor-strip svg{color:#c4b5fd}
+.experience-shell .appfoot{color:#7f88a5;letter-spacing:.55px}
+.camera-backdrop{position:fixed;inset:0;z-index:90;background:rgba(3,5,14,.82);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(14px)}
+.camera-dialog{width:min(720px,100%);max-height:calc(100vh - 40px);overflow:auto;border-radius:28px;padding:24px}
+.camera-heading{display:flex;justify-content:space-between;gap:14px;margin-bottom:18px}
+.camera-heading h2{font:700 26px/1.15 Outfit,system-ui;margin:8px 0}
+.camera-heading p{color:#b6bfd8;font-size:12px;line-height:1.6;max-width:490px}
+.camera-close{display:grid;place-items:center;align-self:flex-start;background:#ffffff15;color:white;border:1px solid #ffffff24;width:36px;height:36px;border-radius:11px;cursor:pointer}
+.camera-viewport{height:min(50vh,410px);min-height:220px;position:relative;background:#030610;border-radius:18px;overflow:hidden;display:grid;place-items:center}
+.camera-viewport video,.camera-photo{width:100%;height:100%;object-fit:contain}
+.camera-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;text-align:center;padding:30px;color:#d3d2eb;background:#090c19b9;font-size:13px}
+.camera-guides{pointer-events:none;position:absolute;inset:12%;border:1px solid #c3baff88;border-radius:16px}
+.camera-buttons{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:850px){.floating-links{gap:14px}.floating-nav{width:calc(100% - 22px)}.hero-glass{padding:42px 30px 26px}.experience-shell .cards{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.floating-nav{position:relative;top:0;margin:10px auto 0;padding:11px 13px;border-radius:17px;gap:10px}.floating-links{display:none}.nav-github{padding:10px}.nav-github span{display:none}.experience-shell .topbar{padding:13px 12px;margin:10px auto 0;gap:12px;font-size:10px}.experience-shell .topbar .tag{display:none}.experience-shell .wrap{padding:15px 12px 60px}.hero-glass{border-radius:24px;padding:35px 19px 23px}.experience-shell .hero h1{font-size:clamp(38px,10.6vw,56px);letter-spacing:-2.3px}.experience-shell .hero p{font-size:13px}.hero-actions{gap:9px}.hero-actions .primary-action,.hero-actions .glass-button{flex:1}.glow-link{width:100%;justify-content:center;margin:4px 0}.experience-shell .steps{gap:6px}.experience-shell .steps>span{padding:8px 9px;font-size:10px}.experience-shell .panel{border-radius:20px;padding:20px 15px}.experience-shell .inputgrid,.experience-shell .cards{grid-template-columns:1fr}.experience-shell .upload{min-height:225px}.experience-shell .textentry{min-height:195px}.experience-shell .textentry textarea{min-height:115px}.experience-shell .ideacard{min-height:0}.experience-shell .ptitle h2{font-size:23px}.sponsor-strip{gap:12px;justify-content:flex-start}.camera-dialog{padding:18px;border-radius:22px}.camera-heading h2{font-size:22px}.camera-viewport{height:40vh}}
+@media(prefers-reduced-transparency:reduce){.glass,.floating-nav,.hero-glass,.experience-shell .panel,.experience-shell .ideacard,.experience-shell .empty-grid>div{backdrop-filter:none;background:#161c30}}
+@media(prefers-reduced-motion:reduce){.experience-shell .ideacard,.primary-action,.glass-button{transition:none!important}}
