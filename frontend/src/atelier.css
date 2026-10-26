@@ -107,3 +107,12 @@ body{background:#060914;color:var(--s2s-text)}
 @media(max-width:650px){.floating-nav{position:relative;top:0;margin:10px auto 0;padding:11px 13px;border-radius:17px;gap:10px}.floating-links{display:none}.nav-github{padding:10px}.nav-github span{display:none}.experience-shell .topbar{padding:13px 12px;margin:10px auto 0;gap:12px;font-size:10px}.experience-shell .topbar .tag{display:none}.experience-shell .wrap{padding:15px 12px 60px}.hero-glass{border-radius:24px;padding:35px 19px 23px}.experience-shell .hero h1{font-size:clamp(38px,10.6vw,56px);letter-spacing:-2.3px}.experience-shell .hero p{font-size:13px}.hero-actions{gap:9px}.hero-actions .primary-action,.hero-actions .glass-button{flex:1}.glow-link{width:100%;justify-content:center;margin:4px 0}.experience-shell .steps{gap:6px}.experience-shell .steps>span{padding:8px 9px;font-size:10px}.experience-shell .panel{border-radius:20px;padding:20px 15px}.experience-shell .inputgrid,.experience-shell .cards{grid-template-columns:1fr}.experience-shell .upload{min-height:225px}.experience-shell .textentry{min-height:195px}.experience-shell .textentry textarea{min-height:115px}.experience-shell .ideacard{min-height:0}.experience-shell .ptitle h2{font-size:23px}.sponsor-strip{gap:12px;justify-content:flex-start}.camera-dialog{padding:18px;border-radius:22px}.camera-heading h2{font-size:22px}.camera-viewport{height:40vh}}
 @media(prefers-reduced-transparency:reduce){.glass,.floating-nav,.hero-glass,.experience-shell .panel,.experience-shell .ideacard,.experience-shell .empty-grid>div{backdrop-filter:none;background:#161c30}}
 @media(prefers-reduced-motion:reduce){.experience-shell .ideacard,.primary-action,.glass-button{transition:none!important}}
+
+/* Honest AI-provider availability: distinguish live inference from the working curated demo. */
+.ai-unavailable{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border:1px solid rgba(206,180,255,.35);background:rgba(114,86,176,.13);border-radius:16px;padding:17px 19px;margin-top:16px}
+.ai-unavailable>div{display:flex;align-items:flex-start;gap:12px;flex:1;min-width:200px}
+.ai-unavailable>div>svg{flex-shrink:0;color:#d5c1ff;margin-top:2px}
+.ai-unavailable b{font:700 13px 'DM Sans','Segoe UI',system-ui,sans-serif;color:#eee9ff}
+.ai-unavailable p{font-size:12px;line-height:1.6;color:#c5c8e1;margin:6px 0 0}
+.ai-unavailable .glass-button{border-color:rgba(202,182,255,.42);white-space:nowrap}
+@media(max-width:650px){.ai-unavailable{padding:16px}.ai-unavailable .glass-button{width:100%}}
