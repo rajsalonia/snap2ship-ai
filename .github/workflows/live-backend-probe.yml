@@ -85,6 +85,11 @@ jobs:
                       print('Real hosted image analysis exactly 3 ideas:', len(data.get('ideas', [])) == 3)
               except urllib.error.HTTPError as exc:
                   print('Live image analysis HTTP status:', exc.code)
+                  try:
+                      detail = json.loads(exc.read()).get('detail', 'No explanation')
+                  except Exception:
+                      detail = 'No explanation'
+                  print('Sanitized image error:', str(detail)[:360].replace('\\n', ' '))
                   print('::warning::Hosted Gemma image request failed; text analysis may still be functional.')
               except Exception as exc:
                   print('::warning::Image request failure class:', type(exc).__name__)
