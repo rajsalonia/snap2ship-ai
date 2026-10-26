@@ -1,0 +1,114 @@
+name: QA full live Snap2Ship backend
+on:
+  push:
+    paths:
+      - ".github/workflows/qa-live-backend.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-live-api-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run live integration checks (no credentials used)
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64, io, json, sys, time, urllib.request, urllib.error, zipfile
+          from pathlib import Path
+          BASE = "https://snap2ship-ai-api.onrender.com"
+          results = []
+          def request(method, path, data=None, headers=None, timeout=130):
+              body = json.dumps(data).encode("utf-8") if data is not None else None
+              h = dict(headers or {})
+              if body is not None: h["Content-Type"] = "application/json"
+              req = urllib.request.Request(BASE + path, data=body, headers=h, method=method)
+              try:
+                  with urllib.request.urlopen(req, timeout=timeout) as r:
+                      blob = r.read()
+                      try: result = json.loads(blob)
+                      except ValueError: result = blob.decode("utf-8", errors="replace")
+                      return r.status, result, dict(r.headers)
+              except urllib.error.HTTPError as err:
+                  try: result = json.loads(err.read())
+                  except ValueError: result = {"detail":"non-JSON response"}
+                  return err.code, result, dict(err.headers)
+          def record(label, success, note=""):
+              results.append((label, bool(success), str(note)[:220]))
+              print(("PASS" if success else "FAIL") + " | " + label + (" | " + str(note)[:220] if note else ""), flush=True)
+          def safe_detail(result):
+              return str(result.get("detail",""))[:180] if isinstance(result, dict) else str(result)[:180]
+          health = None
+          for attempt in range(5):
+              try:
+                  status, h, headers = request("GET", "/health", timeout=50)
+                  if status==200 and isinstance(h,dict) and h.get("ok"): health=h; break
+                  print("Health retry status",status)
+              except Exception as err: print("Health retry",type(err).__name__)
+              time.sleep(8)
+          if health is None:
+              record("Live health endpoint",False,"No successful response")
+              raise SystemExit(1)
+          record("Live health endpoint", True, "HTTP 200")
+          record("Gemma key configured", health.get("key_configured") is True)
+          record("Trusted npm compiler available",health.get("compiler_available") is True)
+          record("Gemma model configured",health.get("model")=="gemma-4-26b-a4b-it",health.get("model"))
+          status, root, _ = request("GET","/",timeout=50)
+          record("Frontend served by FastAPI", status==200 and isinstance(root,str) and ("root" in root.lower()), "HTTP "+str(status))
+          status, sample, _=request("GET","/api/sample")
+          analysis=sample.get("analysis",{}) if isinstance(sample,dict) else {}
+          ideas=analysis.get("ideas",[])
+          record("Curated sample GET", status==200 and sample.get("provenance")=="curated_sample" and sample.get("model_called") is False and len(ideas)==3, "HTTP "+str(status))
+          status, bad, _=request("POST","/api/analyze",{"description":""})
+          record("Empty analyze input rejected",status==400,"HTTP "+str(status))
+          status, bad, _=request("POST","/api/analyze",{"description":"Inspect","image_data_url":"data:image/png;base64,!!!"})
+          record("Malformed image rejected",status==400,"HTTP "+str(status))
+          status, bad, _=request("POST","/api/analyze",{"description":"x"*2501})
+          record("Oversized description rejected",status==422,"HTTP "+str(status))
+          status, bad, _=request("POST","/api/build",{})
+          record("Missing build payload rejected",status==422,"HTTP "+str(status))
+          if ideas:
+              changed=dict(ideas[0]);changed["title"]="Altered Untrusted App"
+              status, bad, _=request("POST","/api/build",{"analysis":analysis,"idea":changed})
+              record("Modified idea rejected",status==400,"HTTP "+str(status))
+          else: record("Modified idea rejected",False,"Sample ideas missing")
+          status, data, cors_h=request("GET","/health",headers={"Origin":"https://attacker.invalid"})
+          record("Unknown external origin not granted CORS",status==200 and "Access-Control-Allow-Origin" not in cors_h, "HTTP "+str(status))
+          for idea in ideas:
+              category=idea["template"]
+              try:
+                  status, built, _=request("POST","/api/build",{"analysis":analysis,"idea":idea},timeout=140)
+                  valid=built.get("validation",{}) if isinstance(built,dict) else {}
+                  is_compiled=(status==200 and valid.get("production_build_passed") is True and valid.get("status")=="passed" and built.get("preview_kind")=="compiled_react")
+                  record(category+" generation + Vite build",is_compiled, "HTTP "+str(status)+", duration "+str(valid.get("duration_seconds"))+" s")
+                  preview=built.get("preview_html","")
+                  record(category+" safe compiled preview",is_compiled and "<script" in preview and "Content-Security-Policy" in preview and built.get("preview_kind")=="compiled_react")
+                  encoded=built.get("zip_base64")
+                  if encoded:
+                      z=zipfile.ZipFile(io.BytesIO(base64.b64decode(encoded)))
+                      names=z.namelist()
+                      report=json.loads(z.read("BUILD-REPORT.json"))
+                      expected={"index.html","package.json","package-lock.json","src/App.jsx","src/content.json","BUILD-REPORT.json"}
+                      record(category+" valid ZIP and source",expected.issubset(names) and report.get("production_build_passed") is True and all(not (n.startswith("/") or ".." in n.split("/")) for n in names),str(len(names))+" files")
+                  else: record(category+" valid ZIP and source",False,"Missing ZIP")
+              except Exception as e:
+                  record(category+" generation + Vite build",False,type(e).__name__)
+          if health.get("key_configured"):
+              status, ai, _=request("POST","/api/analyze",{"description":"Students need a small preparation checklist for college tech events. Return exactly three practical app ideas."},timeout=115)
+              record("Real hosted Gemma text inference",status==200 and isinstance(ai,dict) and len(ai.get("ideas",[]))==3,"HTTP "+str(status)+(", "+safe_detail(ai) if status!=200 else ", exactly 3 ideas"))
+              poster=Path("examples/sample-poster.png")
+              image_url="data:image/png;base64,"+base64.b64encode(poster.read_bytes()).decode()
+              status, ai, _=request("POST","/api/analyze",{"description":"Analyze this fictional campus poster and propose student-friendly micro apps.","image_data_url":image_url},timeout=115)
+              record("Real hosted Gemma image+text inference",status==200 and isinstance(ai,dict) and len(ai.get("ideas",[]))==3,"HTTP "+str(status)+(", "+safe_detail(ai) if status!=200 else ", exactly 3 ideas"))
+          else:
+              record("Real hosted Gemma text inference",False,"API key missing")
+              record("Real hosted Gemma image+text inference",False,"API key missing")
+          passed=sum(ok for _,ok,_ in results); failed=len(results)-passed
+          print("\nSUMMARY "+str(passed)+" passed; "+str(failed)+" failed out of "+str(len(results)),flush=True)
+          print("FAILED CHECKS: "+", ".join(name for name,ok,_ in results if not ok),flush=True)
+          if failed: sys.exit(1)
+          PY
