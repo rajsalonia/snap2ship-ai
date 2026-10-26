@@ -1,33 +1,25 @@
 spec:
   name: snap2ship-ai
   region: blr
-  services:
-  - name: snap2ship
-    git:
-      repo_clone_url: https://github.com/rajsalonia/snap2ship-ai.git
-      branch: main
-    source_dir: /
-    dockerfile_path: Dockerfile
-    http_port: 10000
-    instance_count: 1
-    instance_size_slug: apps-s-1vcpu-0.5gb
-    health_check:
-      http_path: /health
-    envs:
-    - key: GEMMA_MODEL
-      value: gemma-4-26b-a4b-it
-      scope: RUN_TIME
-    - key: BUILD_VALIDATION
-      value: 'true'
-      scope: RUN_TIME
-    - key: ALLOWED_ORIGINS
-      value: ${APP_URL}
-      scope: RUN_TIME
+  static_sites:
+    - name: studio
+      git:
+        repo_clone_url: https://github.com/rajsalonia/snap2ship-ai.git
+        branch: digitalocean-free-20261026
+      source_dir: /frontend
+      environment_slug: node-js
+      build_command: npm ci --ignore-scripts --no-audit --no-fund && npm run build
+      output_dir: dist
+      index_document: index.html
+      catchall_document: index.html
+      envs:
+        - key: VITE_API_URL
+          value: https://snap2ship-ai-api.onrender.com
+          scope: BUILD_TIME
   ingress:
     rules:
-    - match:
-        path:
-          prefix: /
-      component:
-        name: snap2ship
-        preserve_path_prefix: true
+      - match:
+          path:
+            prefix: /
+        component:
+          name: studio
