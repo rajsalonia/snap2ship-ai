@@ -1,0 +1,33 @@
+spec:
+  name: snap2ship-ai
+  region: blr
+  services:
+  - name: snap2ship
+    git:
+      repo_clone_url: https://github.com/rajsalonia/snap2ship-ai.git
+      branch: main
+    source_dir: /
+    dockerfile_path: Dockerfile
+    http_port: 10000
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    health_check:
+      http_path: /health
+    envs:
+    - key: GEMMA_MODEL
+      value: gemma-4-26b-a4b-it
+      scope: RUN_TIME
+    - key: BUILD_VALIDATION
+      value: 'true'
+      scope: RUN_TIME
+    - key: ALLOWED_ORIGINS
+      value: ${APP_URL}
+      scope: RUN_TIME
+  ingress:
+    rules:
+    - match:
+        path:
+          prefix: /
+      component:
+        name: snap2ship
+        preserve_path_prefix: true

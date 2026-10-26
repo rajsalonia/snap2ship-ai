@@ -21,16 +21,22 @@ Story: input image/text → validated planning specification → three ideas →
 | Browser sample flow | Three labelled sample proposals and a real compiled event app rendered |
 | Browser event interactions | Saving an event and searching for Web Workshop passed |
 | Browser checklist interactions | Added “Charge my laptop”, completed it, filtered Done; preview showed 1/4 complete |
+| Browser information-site interaction | Search for “laptop” filtered to the “What to bring” section |
+| Mobile preview control | Actual iframe width measured at 390 pixels; sandbox remains `allow-scripts` |
+| Actual browser source download | Chrome saved `campus-create-companion.zip`; archive contents and build report verified |
+| Downloaded app standalone build | Fresh `npm ci` from the task cache and `npm run build` passed on the exact downloaded archive |
+| Linux CI | [All three jobs passed](https://github.com/rajsalonia/snap2ship-ai/actions/runs/40290796448): backend/templates, frontend and container |
+| Linux backend count | 41 passed, 1 skipped, 1 dependency warning; the skipped local-dist check passes locally |
+| Deployment image | Linux container builds; Node/Python imports, installed compiler and frontend assets verified in CI |
+| App specification | YAML and local invariants pass; remote DigitalOcean validation requires account credentials |
 
 Compiler details are recorded in `template-build-results.json`. The curated sample is not live AI output. Unit tests intentionally disable real compilation by default; the separate compiler checks perform genuine builds for all categories.
 
 ## Not yet verified
 
 - Genuine Gemma text, image-plus-text and structured-output requests: **NOT RUN**, because `GEMINI_API_KEY` is absent and the owner chose to continue without live access.
-- DigitalOcean public deployment, account credits and production CORS/health: awaiting account access and cost/credit verification.
-- Docker image: configuration authored; local Docker engine was not running. GitHub Actions includes a container build check; its result must be inspected separately.
-- Browser-managed source download: the in-app browser download observation timed out. ZIP validity and contents pass through the actual API; browser download behavior requires another browser check.
-- Information-site runtime interactions and full mobile viewport behavior: production compilation passed; further browser checks are still pending.
+- DigitalOcean public deployment and production CORS/health: not yet verified. Account inspection found $25 Hacktoberfest credits expiring 29 October, plus a separate $5 inference trial; billing reports incomplete setup and no payment method.
+- Full dashboard phone-viewport override: browser automation timed out. The embedded 390-pixel mobile preview was verified separately.
 - Hackathon form submission/acceptance: no form destination or receipt has been verified.
 
 ## Corrected failures

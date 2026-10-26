@@ -4,10 +4,9 @@ name: snap2ship-ai
 region: blr
 services:
   - name: snap2ship
-    github:
-      repo: rajsalonia/snap2ship-ai
+    git:
+      repo_clone_url: https://github.com/rajsalonia/snap2ship-ai.git
       branch: main
-      deploy_on_push: false
     source_dir: /
     dockerfile_path: Dockerfile
     http_port: 10000

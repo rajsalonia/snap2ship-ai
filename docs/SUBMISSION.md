@@ -99,7 +99,7 @@ If genuine Gemma access is later verified, replace the missing-key/sample segmen
 4. Mobile preview and a working interaction.
 5. Public repository and verified live URL, if available.
 
-Current saved image: `docs/screenshots/03-compiled-preview.png`. Additional screenshots belong in that folder. No video recording has been produced; use this exact sequence and script for a truthful recording.
+Saved screenshots are in `docs/screenshots/`, including the compiled event preview and 390-pixel mobile information-site preview. No video recording has been produced; use this exact sequence and script for a truthful recording.
 
 ## Final submission checklist
 

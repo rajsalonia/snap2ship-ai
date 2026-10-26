@@ -19,7 +19,7 @@ DigitalOcean listed this instance at $5/month on 26 October 2026, billed by usag
 
 ## Control panel
 
-Open Apps → Create App and select the `rajsalonia/snap2ship-ai` GitHub repository, branch `main`. Build from the repository root with `Dockerfile`. If the UI supports importing/editing an app specification, use `.do/app.yaml`; otherwise reproduce its service, port, health check and ingress settings.
+Use [Prepare a DigitalOcean deployment](https://cloud.digitalocean.com/apps/new?repo=https://github.com/rajsalonia/snap2ship-ai/tree/main). It reads `.do/deploy.template.yaml` from the public repository and avoids granting the GitHub app access to your repositories. Build from the repository root with `Dockerfile`. The equivalent ordinary app specification is `.do/app.yaml`.
 
 Keep one web service. The frontend is already built into this container, so a separate frontend component is unnecessary. Review the final cost before creation.
 
@@ -58,3 +58,5 @@ doctl apps create --spec .do/app.yaml
 Creation can incur charges. Do not run it without the required credit/cost verification. Keep tokens out of command-line arguments and committed files.
 
 References: [App specification](https://docs.digitalocean.com/products/app-platform/reference/app-spec/), [Dockerfile builds](https://docs.digitalocean.com/products/app-platform/reference/dockerfile/), [Environment variables](https://docs.digitalocean.com/products/app-platform/how-to/use-environment-variables/), [Pricing](https://docs.digitalocean.com/products/app-platform/details/pricing/).
+
+Account inspection confirmed $25 in Hacktoberfest credits expiring 29 October 2026, plus a separate $5 inference trial. Billing reported no saved payment method and incomplete account setup. Do not assume the inference credit applies to App Platform or that credits remove the account-setup requirement. Paid resource activation still requires the owner's explicit approval.

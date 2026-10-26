@@ -121,6 +121,8 @@ The last command makes real provider requests only with a configured key. Missin
 
 [Deployment guide](docs/DIGITALOCEAN-DEPLOY.md) · [App specification](.do/app.yaml)
 
+[Prepare a DigitalOcean deployment](https://cloud.digitalocean.com/apps/new?repo=https://github.com/rajsalonia/snap2ship-ai/tree/main) from the public repository. Review service pricing and credits before activating it. This path uses `.do/deploy.template.yaml` and does not require granting access to other GitHub repositories.
+
 The Dockerfile builds React and serves it with FastAPI under one origin. Node remains in the runtime for trusted template compilation. No database, GPU or paid agent framework is needed. Confirm account credits and actual service pricing before creating resources. Configure secrets only in encrypted runtime settings. The app-spec file is not evidence of deployment or Gradient AI integration.
 
 ## Security and limits
