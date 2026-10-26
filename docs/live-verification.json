@@ -1,0 +1,84 @@
+{
+  "base_url": "https://snap2ship-ai-api.onrender.com",
+  "checks": [
+    "Public dashboard HTML: HTTP 200",
+    "Public health: HTTP 200; compiler available",
+    "Public sample: exactly three labelled curated ideas",
+    "Invalid empty input rejected with HTTP 400",
+    "Live Gemma request: unavailable as expected without a key; not marked passed"
+  ],
+  "builds": [
+    {
+      "template": "event",
+      "production_build_passed": true,
+      "preview_kind": "compiled_react",
+      "zip_file_count": 11,
+      "request_seconds": 16.81,
+      "compiler_logs": [
+        "> snap2ship-generated-app@1.0.0 build",
+        "> vite build --base=./",
+        "vite v5.4.21 building for production...",
+        "transforming...",
+        "\u2713 27 modules transformed.",
+        "rendering chunks...",
+        "computing gzip size...",
+        "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
+        "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
+        "dist/assets/index-D_5j_J7T.js   148.14 kB \u2502 gzip: 48.04 kB",
+        "\u2713 built in 12.30s",
+        "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
+      ]
+    },
+    {
+      "template": "checklist",
+      "production_build_passed": true,
+      "preview_kind": "compiled_react",
+      "zip_file_count": 11,
+      "request_seconds": 16.58,
+      "compiler_logs": [
+        "> snap2ship-generated-app@1.0.0 build",
+        "> vite build --base=./",
+        "vite v5.4.21 building for production...",
+        "transforming...",
+        "\u2713 27 modules transformed.",
+        "rendering chunks...",
+        "computing gzip size...",
+        "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
+        "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
+        "dist/assets/index-BPiEgl3p.js   146.15 kB \u2502 gzip: 47.51 kB",
+        "\u2713 built in 12.40s",
+        "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
+      ]
+    },
+    {
+      "template": "info",
+      "production_build_passed": true,
+      "preview_kind": "compiled_react",
+      "zip_file_count": 11,
+      "request_seconds": 17.3,
+      "compiler_logs": [
+        "> snap2ship-generated-app@1.0.0 build",
+        "> vite build --base=./",
+        "vite v5.4.21 building for production...",
+        "transforming...",
+        "\u2713 27 modules transformed.",
+        "rendering chunks...",
+        "computing gzip size...",
+        "dist/index.html                   0.41 kB \u2502 gzip:  0.29 kB",
+        "dist/assets/index-D9Ji5L3v.css    5.44 kB \u2502 gzip:  1.96 kB",
+        "dist/assets/index-DcgrZr_o.js   145.19 kB \u2502 gzip: 47.10 kB",
+        "\u2713 built in 12.20s",
+        "Verified dist/index.html, bundled JavaScript and stylesheet; assembled sandboxed React preview."
+      ]
+    }
+  ],
+  "live_gemma_verified": false,
+  "health": {
+    "ok": true,
+    "model": "gemma-4-26b-a4b-it",
+    "key_configured": false,
+    "compiler_available": true,
+    "live_model_verified": false,
+    "note": "Health checks configuration, not actual Gemma access."
+  }
+}

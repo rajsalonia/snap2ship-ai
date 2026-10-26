@@ -6,6 +6,10 @@ Turn a campus poster, screenshot, handwritten note, or problem description into 
 
 Built for Hacktoberfest Hack Day Delhi × SKILLOP DTU, 26 October 2026. MIT licensed.
 
+**[Open the verified live demo](https://snap2ship-ai-api.onrender.com/)** · [Health](https://snap2ship-ai-api.onrender.com/health) · [Deployment evidence](docs/live-verification.json)
+
+The free Render service hosts the React studio, FastAPI API and trusted compiler together. All three public sample builds passed. The service may take about a minute to wake after inactivity.
+
 ## New: photo-first glass studio
 
 The interface is now a floating, responsive glassmorphism experience rather than a fixed dashboard. It has a browser **Take a photo** flow (live preview, confirm or retake), **Upload image**, drag and drop, source preview, a three-idea discovery board and verified build preview.
@@ -27,7 +31,7 @@ The interface is now a floating, responsive glassmorphism experience rather than
 - A separately labelled fictional sample that makes no model request.
 - GitHub Actions for backend tests, frontend compilation, three generated-app builds and the deployment container.
 
-**Live Gemma access is unverified:** no key was supplied and the owner chose to continue without a live provider test. SDK-boundary tests use mocks. Sample proposals are curated, not live AI output. **DigitalOcean deployment is prepared, not yet verified.** See [actual verification](docs/VERIFICATION.md).
+**Live Gemma access is unverified:** no key was supplied and the owner chose to continue without a live provider test. SDK-boundary tests use mocks. Sample proposals are curated, not live AI output. **DigitalOcean's free static frontend is prepared and awaiting account verification; no paid service was activated.** See [actual verification](docs/VERIFICATION.md).
 
 ![Compiled React preview of the fictional sample](docs/screenshots/03-compiled-preview.png)
 
@@ -130,6 +134,8 @@ The last command makes real provider requests only with a configured key. Missin
 ## DigitalOcean
 
 [Deployment guide](docs/DIGITALOCEAN-DEPLOY.md) · [App specification](.do/app.yaml)
+
+The authorized free route uses the [prepared static-site branch](https://github.com/rajsalonia/snap2ship-ai/tree/digitalocean-free-20261026) with the verified Render API above. DigitalOcean's creation wizard confirmed a $0/month static site but still requires owner account verification. This is prepared configuration, not a verified DigitalOcean deployment. The `main` branch's Docker web-service specification is a separate paid option and was not activated.
 
 [Prepare a DigitalOcean deployment](https://cloud.digitalocean.com/apps/new?repo=https://github.com/rajsalonia/snap2ship-ai/tree/main) from the public repository. Review service pricing and credits before activating it. This path uses `.do/deploy.template.yaml` and does not require granting access to other GitHub repositories.
 

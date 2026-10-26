@@ -8,7 +8,9 @@
 
 **GitHub:** https://github.com/rajsalonia/snap2ship-ai
 
-**Verified live URL:** Not yet available. DigitalOcean deployment is awaiting account access and credit/cost verification.
+**Verified live URL:** https://snap2ship-ai-api.onrender.com/
+
+**Hosting:** Free Render service, including the React frontend, FastAPI and trusted compiler. The separate free DigitalOcean frontend is prepared but awaits account verification. No paid service was activated.
 
 ## Ready-to-paste project description
 
@@ -18,7 +20,7 @@ After a user chooses an idea, the app factory combines bounded structured conten
 
 Our differentiator is image-led discovery for student and community needs, narrow functional templates, explicit review of source observations and honest build evidence. The workflow was inspired by vibeDeploy; our code, interface and assets are original.
 
-The local backend tests, frontend production build and all three generated-app builds pass. Live Gemma access has not been verified because no API key was supplied; the recorded sample path is explicitly curated and makes no model call. DigitalOcean deployment files are prepared, but hosting and Gradient AI integration are not claimed until verified.
+All 44 local backend tests, the frontend production build and all three generated-app builds pass. The public Render demo also compiled all three app categories and exported valid source ZIPs; actual logs are in `docs/live-verification.json`. Live Gemma access has not been verified because no API key was supplied; the sample path is explicitly curated and makes no model call. DigitalOcean's $0/month static frontend is prepared but awaits account verification. No DigitalOcean hosting or Gradient AI integration is claimed.
 
 ## Inspiration
 
@@ -44,7 +46,9 @@ The fictional Campus Create Day sample exists to demonstrate the downstream fact
 
 ## DigitalOcean usage
 
-The requested deployment target is DigitalOcean App Platform. A same-origin Docker deployment and app specification are prepared. Until the active deployment and public endpoint are verified, state: **deployment prepared, not deployed/verified**. No Gradient AI integration is implemented.
+DigitalOcean App Platform's free static-site configuration is prepared on `digitalocean-free-20261026`, pointing to the live free Render API. Its creation wizard confirmed $0/month but requires owner account verification. It has not been deployed or verified. The paid Docker web-service option was not activated. No Gradient AI integration is implemented.
+
+The working public demo is hosted on free Render at https://snap2ship-ai-api.onrender.com/. Its public dashboard, health, curated sample, all three real builds, compiled previews and source ZIPs passed verification. Deployed code revision: `8be73aacfe993862f45ac0392c037ce3a5f6661a`.
 
 ## Challenges and solutions
 
@@ -87,7 +91,7 @@ Every campus poster hides a small software opportunity. Snap2Ship AI helps turn 
 | 0:45–1:05 | Three sample cards, facts and score rubric | “Here are three scoped options. These sample proposals are curated. The score describes builder feasibility, not independent market research.” |
 | 1:05–1:25 | Build selected event idea, then compiler logs | “The factory compiles trusted React templates with structured content. These are actual npm build logs.” |
 | 1:25–1:45 | React preview: search a session, save an event, add/complete a task | “This is the compiled React app. Its interactions work inside the isolated preview.” |
-| 1:45–2:00 | Source ZIP, GitHub and actual hosting status | “The export includes source, a lockfile and the real build report. Our source is MIT licensed. DigitalOcean hosting is shown only if its public deployment has been verified.” |
+| 1:45–2:00 | Source ZIP, GitHub and live Render demo | “The export includes source, a lockfile and the real build report. Our source is MIT licensed, and this demo runs on free Render. The free DigitalOcean frontend is prepared but awaiting account verification.” |
 
 If genuine Gemma access is later verified, replace the missing-key/sample segment with the real request, keep all source-fact and score caveats, and record the actual result. Do not edit the sample disclosure out of a sample-based recording.
 
