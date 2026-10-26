@@ -12,6 +12,6 @@ export default function BuildPreview({built, title, onDownload}) {
     <div className={'preview-stage ' + device}><iframe title="Generated app preview" srcDoc={built.preview_html} sandbox="allow-scripts" className="preview"/></div>
     <div className="review">{passed ? <CheckCircle2 size={18}/> : <AlertCircle size={18}/>}<span>{passed ? 'npm run build passed and production HTML, JavaScript and CSS were checked. Try the interactions in the preview. This does not verify factual accuracy or every runtime behavior.' : 'Source files were generated. Production compilation has not passed; inspect the logs before using this app.'}</span></div>
     <div className="artifact-details"><details><summary><Terminal size={15}/>Build logs <span>{result.status}</span></summary><pre>{result.logs.join('\n')}</pre></details><details><summary><FileCode2 size={15}/>Project files <span>{built.files.length} files</span></summary><ul className="file-list">{built.files.map(file => <li key={file.path}><code>{file.path}</code><span>{file.bytes.toLocaleString()} B</span></li>)}</ul></details></div>
-    <div className="bottom"><span>React + Vite · lockfile · README · actual build report</span><button onClick={onDownload}><Download size={16}/>Download source ZIP</button></div>
+    <div className="bottom"><span>React + Vite · lockfile · README · actual build report</span><button type="button" onClick={onDownload}><Download size={16}/>Download source ZIP</button></div>
   </section>;
 }

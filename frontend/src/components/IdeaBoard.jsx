@@ -13,7 +13,7 @@ export default function IdeaBoard({analysis, mode, selected, onSelect, onBuild, 
       <ul className="feature-list">{idea.features.map((feature, j) => <li key={j}><CheckCircle2 size={12}/>{feature}</li>)}</ul>
       <p className="reason">{idea.reason}</p>
       {idea.score_breakdown && <details className="score-details"><summary>How this score is estimated</summary><dl><div><dt>MVP scope</dt><dd>{idea.score_breakdown.scope}/40</dd></div><div><dt>Template fit</dt><dd>{idea.score_breakdown.template_fit}/35</dd></div><div><dt>Source clarity</dt><dd>{idea.score_breakdown.source_clarity}/25</dd></div></dl></details>}
-      <div className="idea-actions"><button className="select-button" onClick={() => onSelect(i)} aria-pressed={selected === i} disabled={busy}>{selected === i ? 'Selected' : 'Select idea'}</button><button className="build-card" onClick={() => onBuild(i)} disabled={busy}><Code2 size={14}/>Build<ArrowRight size={13}/></button></div>
+      <div className="idea-actions"><button className="select-button" onClick={() => onSelect(i)} aria-pressed={selected === i} disabled={busy}>{selected === i ? 'Selected' : 'Select idea'}</button><button className="build-card" onClick={() => onBuild(i)} disabled={busy} aria-label={`Build ${idea.title}`}><Code2 size={14}/>Build<ArrowRight size={13}/></button></div>
     </article>)}</div>
     <div className="review"><ShieldCheck size={17}/><span><b>Review required:</b> {analysis.confidence_note}</span></div>
     <p className="smallnote">Scores are feasibility estimates for this template builder, not independent market research. GO ≥ 75 · REVIEW ≥ 50 · NO-GO &lt; 50.</p>
